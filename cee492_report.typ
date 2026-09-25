@@ -317,7 +317,7 @@ Table 1 summarizes the main attributes that are expected to be relevant to this 
   ),
 ) <attributes-table>
 
-= Project Proposal (by Rajaee)
+= Project Proposal
 
 To add figures to your report, save the image file in the `figures` folder and use the `#figure` command as shown below to include it in your document. You can specify the width of the image and add a caption. Then you can reference the figure like this: @proofread.
 
