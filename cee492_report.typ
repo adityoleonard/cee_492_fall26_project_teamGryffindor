@@ -44,15 +44,7 @@ The US Traffic Accidents dataset covers 259,077 crashes from 2016 through 2020 a
 
 Table 1 summarizes the main attributes that are expected to be relevant to this project; the complete CRSS dataset contains additional variables related to crash, vehicle, and person characteristics.
 
-#figure(
-  caption: [Attributes of the US Traffic Accidents Dataset],
-  table(
-    columns: (auto, auto, auto),
-    table.header([*Column 1*], [*Column 2*], [*Column 3*]),
-    "Row 1", "Data 1", [Data 2],
-    image("figures/proof-read.png", width: 40%), "Data 3", "Data 4",
-  ),
-) <table-example>
+
 
 = Proposal (by Rajaee)
 
