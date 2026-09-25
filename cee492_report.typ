@@ -1,4 +1,4 @@
-#import "@preview/charged-ieee:0.1.4": ieee
+#import "@preview/ieee-monolith:0.1.0": ieee
 
 #show: ieee.with(
   title: [Exploring U.S. Traffic Accident Data, 2016–2020],
@@ -45,8 +45,279 @@ The US Traffic Accidents dataset covers 259,077 crashes from 2016 through 2020 a
 Table 1 summarizes the main attributes that are expected to be relevant to this project; the complete CRSS dataset contains additional variables related to crash, vehicle, and person characteristics.
 
 
+#show figure: set block(breakable: true)
+#figure(
+  caption: [Attributes of the U.S. Traffic Accidents Dataset],
+  table(
+    columns: (5%, 20%, 55%, 20%),
+    align: (center, center, left, center),
+    inset: 4pt,
 
-= Proposal (by Rajaee)
+    table.header(
+      [*No.*],
+      [*Attribute*],
+      [*Description*],
+      [*Type / Unit*],
+    ),
+
+    [`1`],
+    [`CASENUM`],
+    [Unique case number assigned to each sampled crash. Used to identify a crash and link it with vehicle and person records.],
+    [Identifier],
+
+    [`2`],
+    [`PSU`],
+    [Primary Sampling Unit representing the geographic area from which the police crash report was sampled. A PSU generally consists of a county or group of counties.],
+    [Categorical code],
+
+    [`3`],
+    [`PJ`],
+    [Police Jurisdiction from which the police crash report was sampled.],
+    [Categorical code],
+
+    [`4`],
+    [`STRATUM`],
+    [Sampling stratum into which the police crash report was classified during CRSS sampling.],
+    [Categorical code],
+
+    [`5`],
+    [`VE_TOTAL`],
+    [Number of vehicle forms submitted for the crash; represents the total vehicles recorded in the case.],
+    [Count],
+
+    [`6`],
+    [`VE_FORMS`],
+    [Number of motor vehicles in transport involved in the crash.],
+    [Count],
+
+    [`7`],
+    [`PVH_INVL`],
+    [Number of parked or working vehicles involved in the crash.],
+    [Count],
+
+    [`8`],
+    [`PEDS`],
+    [Number of forms submitted for persons who were not occupants of motor vehicles, such as pedestrians or cyclists.],
+    [Count],
+
+    [`9`],
+    [`PERMVIT`],
+    [Number of persons occupying motor vehicles in transport.],
+    [Count],
+
+    [`10`],
+    [`PERNOTMVIT`],
+    [Number of persons involved in the crash who were not in motor vehicles in transport.],
+    [Count],
+
+    [`11`],
+    [`NUM_INJ`],
+    [Number of people injured in the crash.],
+    [Persons],
+
+    [`12`],
+    [`MONTH`],
+    [Month in which the crash occurred.],
+    [1–12],
+
+    [`13`],
+    [`YEAR`],
+    [Calendar year in which the crash occurred.],
+    [Year],
+
+    [`14`],
+    [`DAY_WEEK`],
+    [Day of the week on which the crash occurred.],
+    [Categorical code],
+
+    [`15`],
+    [`HOUR`],
+    [Hour at which the crash occurred.],
+    [Hour, 0–23],
+
+    [`16`],
+    [`MINUTE`],
+    [Minute at which the crash occurred.],
+    [Minute, 0–59],
+
+    [`17`],
+    [`HARM_EV`],
+    [First harmful event associated with the crash, such as collision with another vehicle, pedestrian, or fixed object.],
+    [Categorical code],
+
+    [`18`],
+    [`ALCOHOL`],
+    [Indicates whether alcohol involvement was identified in the crash.],
+    [Categorical code],
+
+    [`19`],
+    [`MAX_SEV`],
+    [Maximum injury severity among all persons involved in the crash.],
+    [Categorical / ordinal],
+
+    [`20`],
+    [`MAN_COLL`],
+    [Manner of collision associated with the first harmful event, such as rear-end, head-on, or angle collision.],
+    [Categorical code],
+
+    [`21`],
+    [`RELJCT1`],
+    [Indicates whether the crash occurred within an interchange area.],
+    [Categorical code],
+
+    [`22`],
+    [`RELJCT2`],
+    [Describes the specific relationship of the crash location to a junction, such as an intersection or driveway.],
+    [Categorical code],
+
+    [`23`],
+    [`TYP_INT`],
+    [Type of intersection associated with the crash.],
+    [Categorical code],
+
+    [`24`],
+    [`WRK_ZONE`],
+    [Indicates whether the crash occurred in or was related to a work zone.],
+    [Categorical code],
+
+    [`25`],
+    [`REL_ROAD`],
+    [Describes the location of the crash relative to the trafficway, such as on the roadway, shoulder, median, or roadside.],
+    [Categorical code],
+
+    [`26`],
+    [`LGT_COND`],
+    [Lighting condition at the time of the crash, such as daylight, darkness, dawn, or dusk.],
+    [Categorical code],
+
+    [`27`],
+    [`WEATHER1`],
+    [First atmospheric/weather condition recorded for the crash.],
+    [Categorical code],
+
+    [`28`],
+    [`WEATHER2`],
+    [Second atmospheric/weather condition recorded when more than one condition applied.],
+    [Categorical code],
+
+    [`29`],
+    [`WEATHER`],
+    [Derived atmospheric condition used to summarize the prevailing weather at the time of the crash.],
+    [Categorical code],
+
+    [`30`],
+    [`SCH_BUS`],
+    [Indicates whether the crash was related to a school bus.],
+    [Categorical code],
+
+    [`31`],
+    [`INT_HWY`],
+    [Indicates whether the crash occurred on an Interstate Highway.],
+    [Categorical code],
+
+    [`32`],
+    [`CF1`],
+    [First crash-level related factor reported in the crash record.],
+    [Categorical code],
+
+    [`33`],
+    [`CF2`],
+    [Second crash-level related factor reported in the crash record.],
+    [Categorical code],
+
+    [`34`],
+    [`CF3`],
+    [Third crash-level related factor reported in the crash record.],
+    [Categorical code],
+
+    [`35`],
+    [`WKDY_IM`],
+    [Imputed version of `DAY_WEEK`, used when the original day-of-week information is missing or unknown.],
+    [Categorical code],
+
+    [`36`],
+    [`HOUR_IM`],
+    [Imputed version of the crash hour.],
+    [Hour / categorical code],
+
+    [`37`],
+    [`MINUTE_IM`],
+    [Imputed version of the crash minute.],
+    [Minute / categorical code],
+
+    [`38`],
+    [`EVENT1_IM`],
+    [Imputed version of the first harmful event (`HARM_EV`).],
+    [Categorical code],
+
+    [`39`],
+    [`MANCOL_IM`],
+    [Imputed version of the manner of collision (`MAN_COLL`).],
+    [Categorical code],
+
+    [`40`],
+    [`RELJCT1_IM`],
+    [Imputed version of the interchange-area relationship (`RELJCT1`).],
+    [Categorical code],
+
+    [`41`],
+    [`RELJCT2_IM`],
+    [Imputed version of the specific junction relationship (`RELJCT2`).],
+    [Categorical code],
+
+    [`42`],
+    [`LGTCON_IM`],
+    [Imputed version of the lighting condition (`LGT_COND`).],
+    [Categorical code],
+
+    [`43`],
+    [`WEATHR_IM`],
+    [Imputed version of the atmospheric/weather condition (`WEATHER`).],
+    [Categorical code],
+
+    [`44`],
+    [`MAXSEV_IM`],
+    [Imputed version of maximum injury severity (`MAX_SEV`).],
+    [Categorical / ordinal],
+
+    [`45`],
+    [`NO_INJ_IM`],
+    [Imputed version of the number of injured persons (`NUM_INJ`).],
+    [Persons],
+
+    [`46`],
+    [`ALCHL_IM`],
+    [Imputed version of alcohol involvement (`ALCOHOL`).],
+    [Categorical code],
+
+    [`47`],
+    [`URBANICITY`],
+    [Indicates whether the geographic area of the crash is classified by CRSS as urban or rural.],
+    [Categorical: Urban/Rural],
+
+    [`48`],
+    [`REGION`],
+    [U.S. geographic region in which the crash occurred: Northeast, Midwest, South, or West.],
+    [Categorical code],
+
+    [`49`],
+    [`PSUSTRAT`],
+    [PSU stratum used in the CRSS sampling design and statistical variance estimation.],
+    [Sampling-design code],
+
+    [`50`],
+    [`PSU_VAR`],
+    [PSU identifier specifically constructed for statistical variance estimation.],
+    [Sampling-design code],
+
+    [`51`],
+    [`WEIGHT`],
+    [Case sampling weight used to convert sampled CRSS crashes into nationally representative estimates.],
+    [Numeric sampling weight],
+  ),
+) <attributes-table>
+
+= Project Proposal (by Rajaee)
 
 To add figures to your report, save the image file in the `figures` folder and use the `#figure` command as shown below to include it in your document. You can specify the width of the image and add a caption. Then you can reference the figure like this: @proofread.
 
