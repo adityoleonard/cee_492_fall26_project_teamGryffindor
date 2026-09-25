@@ -1,7 +1,7 @@
 #import "@preview/ieee-monolith:0.1.0": ieee
 
 #show: ieee.with(
-  title: [Exploring U.S. Traffic Accident Data, 2016–2020 or (Exploratory Analysis and Data-Driven Insights into U.S. Traffic Accidents)],
+  title: [Exploratory Analysis and Data-Driven Insights into U.S. Traffic Accidents],
   authors: (
     (
       name: "Adityo Leonard",
@@ -32,8 +32,7 @@
       email: "mrajaee2@illinois.edu",
     )
   ),
-  index-terms: ("Optional", "Keywords", "Here"),
-  bibliography: bibliography("refs.bib"),
+  
 )
 
 = Data Description
@@ -322,57 +321,3 @@ Table 1 summarizes the main attributes that are expected to be relevant to this 
 Traffic accidents are an important transportation safety concern, and understanding their spatial and temporal patterns, as well as the factors related to their occurrence and severity, can provide useful insights for transportation planning and safety analysis. In this project, we will use the US 2020 Traffic Accidents dataset obtained from Kaggle to investigate traffic accident patterns across the United States. We plan to perform exploratory data analysis and develop visualizations to examine the distribution of accidents by location, time of day, day of the week, and environmental and roadway conditions. We will also investigate how accident severity varies with factors such as weather, visibility, temperature, and road characteristics, using statistical analysis and visualizations to identify meaningful relationships and patterns in the data.
 
 In addition to exploratory analysis, we plan to develop predictive models to investigate whether accident severity can be classified using the available accident characteristics. We will compare the performance of selected machine-learning models and examine the importance of different input variables in their predictions. The results will be interpreted in the context of transportation safety, with an emphasis on understanding patterns in the dataset rather than establishing causal relationships. Through this combination of visualization, statistical analysis, and predictive modeling, we aim to better understand traffic accident patterns and identify factors associated with accident severity, providing insights relevant to transportation engineering.
-
-To add figures to your report, save the image file in the `figures` folder and use the `#figure` command as shown below to include it in your document. You can specify the width of the image and add a caption. Then you can reference the figure like this: @proofread.
-
-#figure(
-  image("figures/proof-read.png", width: 80%),
-  caption: [A humble request. (Copyright: University of the Fraser Valley.)],
-) <proofread>
-
-=== First Subsubsection
-
-You can make sub, sub-sub, and sub-sub-sub sections by adding `=` signs in front of the section title. There needs to be a space between the last `=` sign and the title text.
-
-= Second Section
-
-You can add tables using the `#table` command. Here is an example table:
-
-#figure(
-  caption: [Example Table],
-  table(
-    columns: (auto, auto, auto),
-    table.header([*Column 1*], [*Column 2*], [*Column 3*]),
-    "Row 1", "Data 1", [Data 2],
-    image("figures/proof-read.png", width: 40%), "Data 3", "Data 4",
-  ),
-) <table-example>
-
-You can reference the table like this: @table-example.
-
-== Various Text Formatting Options
-
-You can make text _italic_ by surrounding it with `_` symbols, *bold* by surrounding it with `*` symbols, and _*bold italic*_ by combining both. You can format `inline code snippets` by surrounding them with backtick (\`) characters.
-
-You can create bullet point lists using `-` symbols:
-- Bullet point 1
-- Bullet point 2
-  - Sub bullet point 1
-  - Sub bullet point 2
-
-
-You can create numbered lists using numbers followed by a period (or using `+` symbols, which number the items for you):
-1. First item
-2. Second item
-  1. Sub item 1
-  2. Sub item 2
-
-
-
-== Equations
-
-You can create equations using `$` symbols. For example, you can make an inline equation like this $E=m c^2$ or a displayed equation like this:
-
-$ x < y => x gt.eq.not y $ <eq1>
-
-You can reference the equation like this: Eq. @eq1.
