@@ -1,7 +1,7 @@
 #import "@preview/ieee-monolith:0.1.0": ieee
 
 #show: ieee.with(
-  title: [Exploring U.S. Traffic Accident Data, 2016–2020],
+  title: [Exploring U.S. Traffic Accident Data, 2016–2020 or (Exploratory Analysis and Data-Driven Insights into U.S. Traffic Accidents)],
   authors: (
     (
       name: "Adityo Leonard",
@@ -318,6 +318,10 @@ Table 1 summarizes the main attributes that are expected to be relevant to this 
 ) <attributes-table>
 
 = Project Proposal
+
+Traffic accidents are an important transportation safety concern, and understanding their spatial and temporal patterns, as well as the factors related to their occurrence and severity, can provide useful insights for transportation planning and safety analysis. In this project, we will use the US 2020 Traffic Accidents dataset obtained from Kaggle to investigate traffic accident patterns across the United States. We plan to perform exploratory data analysis and develop visualizations to examine the distribution of accidents by location, time of day, day of the week, and environmental and roadway conditions. We will also investigate how accident severity varies with factors such as weather, visibility, temperature, and road characteristics, using statistical analysis and visualizations to identify meaningful relationships and patterns in the data.
+
+In addition to exploratory analysis, we plan to develop predictive models to investigate whether accident severity can be classified using the available accident characteristics. We will compare the performance of selected machine-learning models and examine the importance of different input variables in their predictions. The results will be interpreted in the context of transportation safety, with an emphasis on understanding patterns in the dataset rather than establishing causal relationships. Through this combination of visualization, statistical analysis, and predictive modeling, we aim to better understand traffic accident patterns and identify factors associated with accident severity, providing insights relevant to transportation engineering.
 
 To add figures to your report, save the image file in the `figures` folder and use the `#figure` command as shown below to include it in your document. You can specify the width of the image and add a caption. Then you can reference the figure like this: @proofread.
 
