@@ -328,6 +328,29 @@ In addition to exploratory analysis, we plan to develop predictive models to inv
 
 As described above, we initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
 
+We first examined the distribution of all 15 parameters across the 54,745 sampled crashes in 2020. The three overview figures describe the crashes in the sample before we focus on selected variables and their relationships with injury severity. Percentages in these overview figures are unweighted sample percentages.
+
+#figure(
+  image("figures/figure1_outcomes_participants.png", width: 100%),
+  caption: [Injury outcomes and people involved in the 2020 crash sample. The five panels show maximum injury severity, number of injuries, number of vehicles, number of pedestrians, and youngest driver age. Percentages and counts are unweighted.],
+) <fig-overview-outcomes>
+
+Figure 1 shows that 44.2% of sampled crashes had no apparent injury and 61.0% involved two vehicles. Most crashes had no pedestrian involved. Youngest driver age is calculated from driver records for each crash; crashes without a known driver age are omitted from that histogram.
+
+#figure(
+  image("figures/figure2_conditions_geography.png", width: 100%),
+  caption: [Weather, lighting, crash hour, urban or rural classification, and geographic region in the 2020 crash sample. Percentages and counts are unweighted.],
+) <fig-overview-conditions>
+
+Figure 2 shows that clear weather and daylight were the most common recorded conditions. Sample crash counts were highest around 5 PM. These counts describe when and where sampled crashes occurred; they do not measure crash risk per mile traveled.
+
+#figure(
+  image("figures/figure3_behavior_context.png", width: 100%),
+  caption: [Alcohol involvement, work-zone involvement, collision type, speeding involvement, and within-crash seat-belt use in the 2020 crash sample. Percentages and counts are unweighted.],
+) <fig-overview-context>
+
+Figure 3 summarizes crash circumstances and safety behavior. Speeding is based on whether any vehicle in the crash was coded as speeding. The seat-belt panel shows the proportion of eligible occupants with known belt status who used a belt; crashes without a known eligible occupant are omitted from that panel.
+
 For the initial exploratory data analysis (EDA), we narrowed these parameters to eight: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, and urban or rural location. These parameters were selected based on their relevance to crash characteristics, injury outcomes, and our ultimate goal of predicting injury severity. This is an initial selection based on our research objectives, rather than the result of a completed statistical feature-selection analysis.
 
 We divided the EDA into two categories. The first focuses on environmental, temporal, and location factors, including weather, lighting, crash timing, and urban or rural location. The second focuses on crash characteristics and injury outcomes, including alcohol involvement, number of vehicles, and number of injuries. Both categories use maximum injury severity (`MAXSEV_IM`) as the common dependent variable. Number of injuries (`NO_INJ_IM`) is considered an additional outcome for descriptive analysis.
