@@ -321,3 +321,110 @@ Table 1 summarizes the main attributes that are expected to be relevant to this 
 Traffic accidents are an important transportation safety concern, and understanding their spatial and temporal patterns, as well as the factors related to their occurrence and severity, can provide useful insights for transportation planning and safety analysis. In this project, we will use the US 2020 Traffic Accidents dataset obtained from Kaggle to investigate traffic accident patterns across the United States. We plan to perform exploratory data analysis and develop visualizations to examine the distribution of accidents by location, time of day, day of the week, and environmental and roadway conditions. We will also investigate how accident severity varies with factors such as weather, visibility, temperature, and road characteristics, using statistical analysis and visualizations to identify meaningful relationships and patterns in the data.
 
 In addition to exploratory analysis, we plan to develop predictive models to investigate whether accident severity can be classified using the available accident characteristics. We will compare the performance of selected machine-learning models and examine the importance of different input variables in their predictions. The results will be interpreted in the context of transportation safety, with an emphasis on understanding patterns in the dataset rather than establishing causal relationships. Through this combination of visualization, statistical analysis, and predictive modeling, we aim to better understand traffic accident patterns and identify factors associated with accident severity, providing insights relevant to transportation engineering.
+
+= Exploratory Data Analysis
+
+== Selection of Variables
+
+As described above, we initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
+
+For the initial exploratory data analysis (EDA), we narrowed these parameters to eight: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, and urban or rural location. These parameters were selected based on their relevance to crash characteristics, injury outcomes, and our ultimate goal of predicting injury severity. This is an initial selection based on our research objectives, rather than the result of a completed statistical feature-selection analysis.
+
+We divided the EDA into two categories. The first focuses on environmental, temporal, and location factors, including weather, lighting, crash timing, and urban or rural location. The second focuses on crash characteristics and injury outcomes, including alcohol involvement, number of vehicles, and number of injuries. Both categories use maximum injury severity (`MAXSEV_IM`) as the common dependent variable. Number of injuries (`NO_INJ_IM`) is considered an additional outcome for descriptive analysis.
+
+== Environmental, Temporal, and Location Factors
+
+Our analysis focuses on the relationships between environmental conditions, crash timing, location, and injury severity. We used the 2020 crash-level CRSS dataset, which originally contains 54,745 sampled crash records. For the severity analysis, we retained 54,544 records with maximum injury severity coded from 0 to 4. We used the CRSS survey weights when calculating crash distributions and percentages.
+
+Across these records, approximately 3.64% of weighted crashes involved serious or fatal injuries. However, this percentage is not the same under all conditions. Our objective is to investigate these differences and determine which parameters may be useful for predicting injury severity.
+
+=== Temporal Distribution of Crashes
+
+#figure(
+  image("figures/timing_heatmap.png", width: 100%),
+  caption: [Hourly distribution of crashes across different days of the week in 2020. Values are survey-weighted and normalized within each day.],
+)
+
+Figure 1 shows the distribution of crashes by hour and day of the week. One interesting observation is that crashes are not uniformly distributed throughout the day. The weighted crash totals are highest during the afternoon, particularly around 3 PM to 5 PM. This may be related to traffic activity and commuting patterns.
+
+However, a higher number of crashes does not necessarily mean that crashes during these hours are more severe. Since our ultimate goal is to predict injury severity, we also need to investigate the severity distribution across different hours. Crash timing may provide useful information, but its predictive importance cannot be determined from crash frequency alone.
+
+=== Weather Conditions and Injury Severity
+
+#figure(
+  image("figures/severity_by_weather.png", width: 100%),
+  caption: [Weighted distribution of maximum injury severity under different weather conditions in 2020.],
+)
+
+Figure 2 compares the distribution of injury severity under different weather conditions. One interesting result is that approximately 3.92% of crashes under clear weather conditions involved serious or fatal injuries, compared with approximately 2.60% under rainy conditions.
+
+At first, this result may seem unexpected because rain can reduce visibility and roadway friction. However, weather conditions may also influence driver behavior, including vehicle speed. In addition, traffic exposure and roadway characteristics may differ between weather categories. Therefore, we cannot conclude that clear weather is more dangerous based only on these percentages.
+
+This comparison shows why it is important to examine the relationship between weather and injury severity rather than only counting crashes under each weather condition. Weather remains a candidate predictor, although its relationship with severity may depend on other variables.
+
+=== Lighting Conditions and Injury Severity
+
+#figure(
+  image("figures/severity_by_lighting.png", width: 100%),
+  caption: [Weighted distribution of maximum injury severity under different lighting conditions in 2020.],
+)
+
+Figure 3 shows differences in injury severity across lighting conditions. Approximately 3.02% of crashes during daylight involved serious or fatal injuries, compared with 4.58% under dark but lighted conditions and 5.55% under dark conditions without lighting.
+
+This difference is interesting because the proportion of serious or fatal injuries under unlighted dark conditions is approximately 1.8 times the corresponding proportion during daylight. Lighting conditions may therefore contain useful information for predicting crash severity.
+
+However, lighting is also related to crash timing, roadway characteristics, and potentially travel speed. We should investigate these relationships before interpreting lighting as an independent contributor to injury severity.
+
+=== Comparison of Serious and Fatal Injury Proportions
+
+#figure(
+  image("figures/severe_injury_lighting_bar.png", width: 90%),
+  caption: [Weighted percentage of crashes involving serious or fatal injuries under different lighting conditions in 2020.],
+)
+
+Figure 4 provides another perspective on the relationship between lighting and injury severity. Instead of showing the complete distribution of severity categories, this figure focuses only on the combined proportion of serious and fatal injuries.
+
+This comparison makes the differences between lighting conditions easier to observe. The proportion is approximately 3.0% during daylight, 4.6% under dark but lighted conditions, and 5.5% under dark conditions without lighting. Dawn and dusk also show relatively high proportions.
+
+This figure suggests that lighting conditions deserve further investigation during predictive modeling. However, these results are descriptive and do not account for other variables that may influence crash severity.
+
+=== Urban and Rural Locations
+
+#figure(
+  image("figures/severity_by_urbanicity.png", width: 100%),
+  caption: [Weighted distribution of maximum injury severity in urban and rural areas in 2020.],
+)
+
+Figure 5 compares injury severity between urban and rural locations. Approximately 4.13% of rural crashes involved serious or fatal injuries, compared with approximately 3.46% of urban crashes.
+
+Although the difference is smaller than the difference observed between some lighting categories, it is still interesting. Urban and rural areas may have different roadway characteristics, traffic conditions, and typical travel speeds. These differences may contribute to the observed variation in injury severity.
+
+Therefore, urban or rural location may be a useful predictor, especially when combined with other variables such as lighting, weather, and crash timing.
+
+== Relationships and Implications for Prediction
+
+The main objective of this project is to predict maximum injury severity. Therefore, our EDA focuses on identifying relationships that may help us select informative independent variables.
+
+Our results show that the proportion of serious or fatal injuries varies across environmental and location categories. Among the variables investigated in this section, lighting conditions show a noticeable difference in the proportion of serious or fatal injuries. Urban or rural location also shows some variation, while weather conditions have relationships that may be influenced by other crash characteristics.
+
+The temporal analysis shows that crashes are more frequent during afternoon hours. However, crash frequency and injury severity are different outcomes. We should examine severity across time categories before deciding how useful crash timing is for prediction.
+
+=== Relationships Between Predictors
+
+An important consideration is that the independent variables may also be related to each other. For example, lighting conditions are related to the time of day, and weather conditions may affect visibility. Therefore, some predictors may provide overlapping information.
+
+We plan to investigate these relationships using suitable statistical methods. A correlation matrix may be useful for numerical variables, while categorical variables can be examined using contingency tables and measures such as Cramer's V.
+
+We should also consider the possibility that the relationship between one variable and injury severity changes depending on another variable. For example, the association between lighting and severity may differ between urban and rural locations.
+
+=== Implications for Predictive Modeling
+
+Based on our initial EDA, weather conditions, lighting conditions, crash timing, and urban or rural location are reasonable candidates for predicting injury severity. These variables will be combined with alcohol involvement and number of vehicles from the other EDA section.
+
+We will use maximum injury severity (`MAXSEV_IM`) as the dependent variable. The number of injuries will be considered for descriptive analysis, but not automatically used as an independent predictor, because it is another crash outcome and may introduce target leakage.
+
+Another important consideration is the imbalance between injury severity categories. Serious and fatal injuries represent a relatively small proportion of the weighted crashes in the 2020 dataset. A model may therefore achieve high overall accuracy while performing poorly on the more severe injury categories.
+
+For this reason, we plan to evaluate our predictive models using a confusion matrix, precision, recall, and F1-score in addition to accuracy. We will also compare the performance of different combinations of independent variables to determine whether each parameter provides useful predictive information.
+
+Overall, our EDA suggests that environmental, temporal, and location factors may contain information related to injury severity. However, the final selection of predictors should depend on their performance on unseen data rather than descriptive relationships alone.
