@@ -424,7 +424,3 @@ Based on our initial EDA, weather conditions, lighting conditions, crash timing,
 We will use maximum injury severity (`MAXSEV_IM`) as the dependent variable. The number of injuries will be considered for descriptive analysis, but not automatically used as an independent predictor, because it is another crash outcome and may introduce target leakage.
 
 Another important consideration is the imbalance between injury severity categories. Serious and fatal injuries represent a relatively small proportion of the weighted crashes in the 2020 dataset. A model may therefore achieve high overall accuracy while performing poorly on the more severe injury categories.
-
-For this reason, we plan to evaluate our predictive models using a confusion matrix, precision, recall, and F1-score in addition to accuracy. We will also compare the performance of different combinations of independent variables to determine whether each parameter provides useful predictive information.
-
-Overall, our EDA suggests that environmental, temporal, and location factors may contain information related to injury severity. However, the final selection of predictors should depend on their performance on unseen data rather than descriptive relationships alone.
