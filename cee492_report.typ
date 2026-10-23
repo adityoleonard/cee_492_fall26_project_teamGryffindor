@@ -424,6 +424,34 @@ Although the difference is smaller than the difference observed between some lig
 
 Therefore, urban or rural location may be a useful predictor, especially when combined with other variables such as lighting, weather, and crash timing.
 
+== Crash Characteristics
+
+In addition to environmental, temporal, and location factors, this study also examines crash characteristics that may influence injury severity. These characteristics include alcohol involvement and the number of vehicles involved in each crash. Analyzing these attributes provides further insights into their potential relationships with crash severity. Therefore, this section explores how alcohol involvement and the number of vehicles involved are associated with different levels of injury severity.
+
+=== Alcohol Involvement and Injury Severity
+
+Figure 9 compares the distribution of injury severity conditional on alcohol involvement. The bars on the left show the percentage of crashes without alcohol involvement, while the bars on the right show the percentage of crashes with alcohol involvement. In other words, each side represents how injury severity is distributed within that alcohol category, allowing a direct comparison of crash outcomes between non-alcohol-related and alcohol-related crashes.
+
+#figure(
+  image("figures/alc_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by alcohol involvement in 2020.],
+)
+
+For crashes with no alcohol involvement, the largest share was No Apparent Injury (O) at 45.48%, indicating that nearly half of non-alcohol-related crashes resulted in no visible injury. This was followed by Possible Injury at 23.50%, Suspected Minor Injury at 17.82%, and Suspected Serious Injury at 10.79%. Fatal Injury accounted for only 2.07%, while the remaining categories contributed only a very small proportion. Overall, the non-alcohol-involved crashes were dominated by less severe outcomes, especially no apparent injury.
+
+In contrast, crashes involving alcohol show a clear shift toward more severe outcomes. The probability of Suspected Minor Injury given alcohol involvement (19.06%) was slightly higher than the probability given no alcohol involvement (17.82%). More importantly, the probability of Suspected Serious Injury given alcohol involvement (23.95%) was much higher than for non-alcohol-involved crashes (10.79%), which is more than twice as large. Likewise, the probability of fatal injury given alcohol involvement was approximately four times higher than that of crashes without alcohol involvement. These results suggest that alcohol involvement is associated with greater crash severity, especially in increasing the likelihood of serious and fatal injuries.
+
+=== Number of Vehicles and Injury Severity
+
+Figure 10 illustrates the relationship between the number of vehicles involved in crashes and injury severity. The heatmap indicates that one-vehicle and two-vehicle crashes contribute the largest fractions across several injury severity categories. The most noticeable pattern is observed for no apparent injury, where two-vehicle crashes account for the largest proportion. Similarly, possible injury is strongly associated with crashes involving two vehicles.
+
+#figure(
+  image("figures/total_vehicle_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by total vehicles involved in 2020.],
+)
+
+In contrast, the died prior to crash category shows negligible fractions regardless of the number of vehicles involved. Moreover, fatal injury and suspected serious injury are primarily concentrated in crashes involving one or two vehicles, with relatively small contributions from crashes involving more vehicles. Overall, the heatmap suggests that crash fractions generally decrease as the number of vehicles involved increases. Therefore, crashes involving one or two vehicles account for the most significant proportions of the observed injury severity outcomes.
+
 == Relationships and Implications for Prediction
 
 The main objective of this project is to predict maximum injury severity. Therefore, our EDA focuses on identifying relationships that may help us select informative independent variables.
