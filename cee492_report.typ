@@ -328,6 +328,29 @@ In addition to exploratory analysis, we plan to develop predictive models to inv
 
 We initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
 
+We first examined the distribution of all 15 parameters across the 54,745 sampled crashes in 2020. The three overview figures describe the crashes in the sample before we focus on selected variables and their relationships with injury severity. Percentages in these overview figures are unweighted sample percentages.
+
+#figure(
+  image("figures/figure1_outcomes_participants.png", width: 100%),
+  caption: [Injury outcomes and people involved in the 2020 crash sample. The five panels show maximum injury severity, number of injuries, number of vehicles, number of pedestrians, and youngest driver age. Percentages and counts are unweighted.],
+) <fig-overview-outcomes>
+
+Figure 1 shows that 44.2% of sampled crashes had no apparent injury and 61.0% involved two vehicles. Most crashes had no pedestrian involved. Youngest driver age is calculated from driver records for each crash; crashes without a known driver age are omitted from that histogram.
+
+#figure(
+  image("figures/figure2_conditions_geography.png", width: 100%),
+  caption: [Weather, lighting, crash hour, urban or rural classification, and geographic region in the 2020 crash sample. Percentages and counts are unweighted.],
+) <fig-overview-conditions>
+
+Figure 2 shows that clear weather and daylight were the most common recorded conditions. Sample crash counts were highest around 5 PM. These counts describe when and where sampled crashes occurred; they do not measure crash risk per mile traveled.
+
+#figure(
+  image("figures/figure3_behavior_context.png", width: 100%),
+  caption: [Alcohol involvement, work-zone involvement, collision type, speeding involvement, and within-crash seat-belt use in the 2020 crash sample. Percentages and counts are unweighted.],
+) <fig-overview-context>
+
+Figure 3 summarizes crash circumstances and safety behavior. Speeding is based on whether any vehicle in the crash was coded as speeding. The seat-belt panel shows the proportion of eligible occupants with known belt status who used a belt; crashes without a known eligible occupant are omitted from that panel.
+
 For the initial exploratory data analysis (EDA), we narrowed these parameters to eight: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, and urban or rural location. These parameters were selected based on their relevance to crash characteristics, injury outcomes, and our ultimate goal of predicting injury severity. This is an initial selection based on our research objectives, rather than the result of a completed statistical feature-selection analysis.
 
 We divided the EDA into two categories. The first focuses on environmental, temporal, and location factors, including weather, lighting, crash timing, and urban or rural location. The second focuses on crash characteristics and injury outcomes, including alcohol involvement, number of vehicles, and number of injuries. Both categories use maximum injury severity (`MAXSEV_IM`) as the common dependent variable. Number of injuries (`NO_INJ_IM`) is considered an additional outcome for descriptive analysis.
@@ -345,7 +368,7 @@ Across these records, approximately 3.64% of weighted crashes involved serious o
   caption: [Hourly distribution of crashes across different days of the week in 2020. Values are survey-weighted and normalized within each day.],
 )
 
-Figure 1 shows the distribution of crashes by hour and day of the week. One interesting observation is that crashes are not uniformly distributed throughout the day. The weighted crash totals are highest during the afternoon, particularly around 3 PM to 5 PM. This may be related to traffic activity and commuting patterns.
+Figure 4 shows the distribution of crashes by hour and day of the week. One interesting observation is that crashes are not uniformly distributed throughout the day. The weighted crash totals are highest during the afternoon, particularly around 3 PM to 5 PM. This may be related to traffic activity and commuting patterns.
 
 However, a higher number of crashes does not necessarily mean that crashes during these hours are more severe. Since our ultimate goal is to predict injury severity, we also need to investigate the severity distribution across different hours. Crash timing may provide useful information, but its predictive importance cannot be determined from crash frequency alone.
 
@@ -356,7 +379,7 @@ However, a higher number of crashes does not necessarily mean that crashes durin
   caption: [Weighted distribution of maximum injury severity under different weather conditions in 2020.],
 )
 
-Figure 2 compares the distribution of injury severity under different weather conditions. One interesting result is that approximately 3.92% of crashes under clear weather conditions involved serious or fatal injuries, compared with approximately 2.60% under rainy conditions.
+Figure 5 compares the distribution of injury severity under different weather conditions. One interesting result is that approximately 3.92% of crashes under clear weather conditions involved serious or fatal injuries, compared with approximately 2.60% under rainy conditions.
 
 At first, this result may seem unexpected because rain can reduce visibility and roadway friction. However, weather conditions may also influence driver behavior, including vehicle speed. In addition, traffic exposure and roadway characteristics may differ between weather categories. Therefore, we cannot conclude that clear weather is more dangerous based only on these percentages.
 
@@ -369,7 +392,7 @@ This comparison shows why it is important to examine the relationship between we
   caption: [Weighted distribution of maximum injury severity under different lighting conditions in 2020.],
 )
 
-Figure 3 shows differences in injury severity across lighting conditions. Approximately 3.02% of crashes during daylight involved serious or fatal injuries, compared with 4.58% under dark but lighted conditions and 5.55% under dark conditions without lighting.
+Figure 6 shows differences in injury severity across lighting conditions. Approximately 3.02% of crashes during daylight involved serious or fatal injuries, compared with 4.58% under dark but lighted conditions and 5.55% under dark conditions without lighting.
 
 This difference is interesting because the proportion of serious or fatal injuries under unlighted dark conditions is approximately 1.8 times the corresponding proportion during daylight. Lighting conditions may therefore contain useful information for predicting crash severity.
 
@@ -382,7 +405,7 @@ However, lighting is also related to crash timing, roadway characteristics, and 
   caption: [Weighted percentage of crashes involving serious or fatal injuries under different lighting conditions in 2020.],
 )
 
-Figure 4 provides another perspective on the relationship between lighting and injury severity. Instead of showing the complete distribution of severity categories, this figure focuses only on the combined proportion of serious and fatal injuries.
+Figure 7 provides another perspective on the relationship between lighting and injury severity. Instead of showing the complete distribution of severity categories, this figure focuses only on the combined proportion of serious and fatal injuries.
 
 This comparison makes the differences between lighting conditions easier to observe. The proportion is approximately 3.0% during daylight, 4.6% under dark but lighted conditions, and 5.5% under dark conditions without lighting. Dawn and dusk also show relatively high proportions.
 
@@ -395,11 +418,53 @@ This figure suggests that lighting conditions deserve further investigation duri
   caption: [Weighted distribution of maximum injury severity in urban and rural areas in 2020.],
 )
 
-Figure 5 compares injury severity between urban and rural locations. Approximately 4.13% of rural crashes involved serious or fatal injuries, compared with approximately 3.46% of urban crashes.
+Figure 8 compares injury severity between urban and rural locations. Approximately 4.13% of rural crashes involved serious or fatal injuries, compared with approximately 3.46% of urban crashes.
 
 Although the difference is smaller than the difference observed between some lighting categories, it is still interesting. Urban and rural areas may have different roadway characteristics, traffic conditions, and typical travel speeds. These differences may contribute to the observed variation in injury severity.
 
 Therefore, urban or rural location may be a useful predictor, especially when combined with other variables such as lighting, weather, and crash timing.
+
+== Crash Characteristics
+
+In addition to environmental, temporal, and location factors, this study also examines crash characteristics that may influence injury severity. These characteristics include alcohol involvement and the number of vehicles involved in each crash. Analyzing these attributes provides further insights into their potential relationships with crash severity. Therefore, this section explores how alcohol involvement and the number of vehicles involved are associated with different levels of injury severity.
+
+=== Alcohol Involvement and Injury Severity
+
+Figure 9 compares the distribution of injury severity conditional on alcohol involvement. The bars on the left show the percentage of crashes without alcohol involvement, while the bars on the right show the percentage of crashes with alcohol involvement. In other words, each side represents how injury severity is distributed within that alcohol category, allowing a direct comparison of crash outcomes between non-alcohol-related and alcohol-related crashes.
+
+#figure(
+  image("figures/alc_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by alcohol involvement in 2020.],
+)
+
+For crashes with no alcohol involvement, the largest share was No Apparent Injury (O) at 45.48%, indicating that nearly half of non-alcohol-related crashes resulted in no visible injury. This was followed by Possible Injury at 23.50%, Suspected Minor Injury at 17.82%, and Suspected Serious Injury at 10.79%. Fatal Injury accounted for only 2.07%, while the remaining categories contributed only a very small proportion. Overall, the non-alcohol-involved crashes were dominated by less severe outcomes, especially no apparent injury.
+
+In contrast, crashes involving alcohol show a clear shift toward more severe outcomes. The probability of Suspected Minor Injury given alcohol involvement (19.06%) was slightly higher than the probability given no alcohol involvement (17.82%). More importantly, the probability of Suspected Serious Injury given alcohol involvement (23.95%) was much higher than for non-alcohol-involved crashes (10.79%), which is more than twice as large. Likewise, the probability of fatal injury given alcohol involvement was approximately four times higher than that of crashes without alcohol involvement. These results suggest that alcohol involvement is associated with greater crash severity, especially in increasing the likelihood of serious and fatal injuries.
+
+=== Number of Vehicles and Injury Severity
+
+Figure 10 illustrates the relationship between the number of vehicles involved in crashes and injury severity. The heatmap indicates that one-vehicle and two-vehicle crashes contribute the largest fractions across several injury severity categories. The most noticeable pattern is observed for no apparent injury, where two-vehicle crashes account for the largest proportion. Similarly, possible injury is strongly associated with crashes involving two vehicles.
+
+#figure(
+  image("figures/total_vehicle_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by total vehicles involved in 2020.],
+)
+
+In contrast, the died prior to crash category shows negligible fractions regardless of the number of vehicles involved. Moreover, fatal injury and suspected serious injury are primarily concentrated in crashes involving one or two vehicles, with relatively small contributions from crashes involving more vehicles. Overall, the heatmap suggests that crash fractions generally decrease as the number of vehicles involved increases. Therefore, crashes involving one or two vehicles account for the most significant proportions of the observed injury severity outcomes.
+
+=== Number of Injuries and Injury Severity
+
+The horizontal stacked bar chart (Figure 11) illustrates the relationship between the number of injuries and injury severity by showing the percentage distribution of crashes within each severity category. Its purpose is to highlight how injury counts vary across severity levels and to identify whether certain severities are associated with a greater number of injured persons. Overall, the chart suggests that the number of injuries is related to crash severity, although the strength of this relationship differs by category.
+
+#figure(
+  image("figures/numinj_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by number of injuries in 2020.],
+)
+
+Several categories appear to be largely unaffected by the number of injuries. No Apparent Injury, No person involved, and Died Prior to Crash are almost entirely concentrated in the 0 injuries group, indicating that these categories do not meaningfully vary with higher injury counts. In contrast, among the five severity categories involving injured persons, 1 injury is the dominant group in every case, contributing more than half of the distribution for each category. This dominance is especially notable for Injured, Severity Unknown, where nearly 90% of crashes involve only one injury. Even for Fatal Injury, where the influence of multiple injuries is more visible, 1 injury still accounts for the largest share at roughly 55%.
+
+At the same time, the distribution of injury counts is more diverse in the Suspected Serious Injury and Fatal Injury categories, where crashes involving multiple injuries account for a larger proportion compared with less severe injury categories. This suggests that more severe crashes tend to be associated with a greater number of injured persons. Therefore, the graph suggests that the number of injuries could be related to injury severity, with higher-severity outcomes tending to show a broader mix of injury counts.
+
 
 == Relationships and Implications for Prediction
 
@@ -408,6 +473,8 @@ The main objective of this project is to predict maximum injury severity. Theref
 Our results show that the proportion of serious or fatal injuries varies across environmental and location categories. Among the variables investigated in this section, lighting conditions show a noticeable difference in the proportion of serious or fatal injuries. Urban or rural location also shows some variation, while weather conditions have relationships that may be influenced by other crash characteristics.
 
 The temporal analysis shows that crashes are more frequent during afternoon hours. However, crash frequency and injury severity are different outcomes. We should examine severity across time categories before deciding how useful crash timing is for prediction.
+
+The findings from crash characteristics analysis suggest that alcohol involvement, the number of vehicles, and the number of injuries are associated with crash severity in different ways. Alcohol involvement shows the clearest association with severe outcomes, particularly serious and fatal injuries. Meanwhile, one- and two-vehicle crashes account for the largest proportions across most severity categories, although this may reflect their higher frequency. Additionally, crashes involving multiple injuries represent a greater proportion of serious and fatal injury categories. These findings indicate potential relationships with injury severity, although further statistical analysis is needed to confirm their significance.
 
 === Relationships Between Predictors
 
