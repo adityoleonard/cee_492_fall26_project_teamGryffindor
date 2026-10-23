@@ -368,7 +368,7 @@ Across these records, approximately 3.64% of weighted crashes involved serious o
   caption: [Hourly distribution of crashes across different days of the week in 2020. Values are survey-weighted and normalized within each day.],
 )
 
-Figure 1 shows the distribution of crashes by hour and day of the week. One interesting observation is that crashes are not uniformly distributed throughout the day. The weighted crash totals are highest during the afternoon, particularly around 3 PM to 5 PM. This may be related to traffic activity and commuting patterns.
+Figure 4 shows the distribution of crashes by hour and day of the week. One interesting observation is that crashes are not uniformly distributed throughout the day. The weighted crash totals are highest during the afternoon, particularly around 3 PM to 5 PM. This may be related to traffic activity and commuting patterns.
 
 However, a higher number of crashes does not necessarily mean that crashes during these hours are more severe. Since our ultimate goal is to predict injury severity, we also need to investigate the severity distribution across different hours. Crash timing may provide useful information, but its predictive importance cannot be determined from crash frequency alone.
 
@@ -379,7 +379,7 @@ However, a higher number of crashes does not necessarily mean that crashes durin
   caption: [Weighted distribution of maximum injury severity under different weather conditions in 2020.],
 )
 
-Figure 2 compares the distribution of injury severity under different weather conditions. One interesting result is that approximately 3.92% of crashes under clear weather conditions involved serious or fatal injuries, compared with approximately 2.60% under rainy conditions.
+Figure 5 compares the distribution of injury severity under different weather conditions. One interesting result is that approximately 3.92% of crashes under clear weather conditions involved serious or fatal injuries, compared with approximately 2.60% under rainy conditions.
 
 At first, this result may seem unexpected because rain can reduce visibility and roadway friction. However, weather conditions may also influence driver behavior, including vehicle speed. In addition, traffic exposure and roadway characteristics may differ between weather categories. Therefore, we cannot conclude that clear weather is more dangerous based only on these percentages.
 
@@ -392,7 +392,7 @@ This comparison shows why it is important to examine the relationship between we
   caption: [Weighted distribution of maximum injury severity under different lighting conditions in 2020.],
 )
 
-Figure 3 shows differences in injury severity across lighting conditions. Approximately 3.02% of crashes during daylight involved serious or fatal injuries, compared with 4.58% under dark but lighted conditions and 5.55% under dark conditions without lighting.
+Figure 6 shows differences in injury severity across lighting conditions. Approximately 3.02% of crashes during daylight involved serious or fatal injuries, compared with 4.58% under dark but lighted conditions and 5.55% under dark conditions without lighting.
 
 This difference is interesting because the proportion of serious or fatal injuries under unlighted dark conditions is approximately 1.8 times the corresponding proportion during daylight. Lighting conditions may therefore contain useful information for predicting crash severity.
 
@@ -405,7 +405,7 @@ However, lighting is also related to crash timing, roadway characteristics, and 
   caption: [Weighted percentage of crashes involving serious or fatal injuries under different lighting conditions in 2020.],
 )
 
-Figure 4 provides another perspective on the relationship between lighting and injury severity. Instead of showing the complete distribution of severity categories, this figure focuses only on the combined proportion of serious and fatal injuries.
+Figure 7 provides another perspective on the relationship between lighting and injury severity. Instead of showing the complete distribution of severity categories, this figure focuses only on the combined proportion of serious and fatal injuries.
 
 This comparison makes the differences between lighting conditions easier to observe. The proportion is approximately 3.0% during daylight, 4.6% under dark but lighted conditions, and 5.5% under dark conditions without lighting. Dawn and dusk also show relatively high proportions.
 
@@ -418,7 +418,7 @@ This figure suggests that lighting conditions deserve further investigation duri
   caption: [Weighted distribution of maximum injury severity in urban and rural areas in 2020.],
 )
 
-Figure 5 compares injury severity between urban and rural locations. Approximately 4.13% of rural crashes involved serious or fatal injuries, compared with approximately 3.46% of urban crashes.
+Figure 8 compares injury severity between urban and rural locations. Approximately 4.13% of rural crashes involved serious or fatal injuries, compared with approximately 3.46% of urban crashes.
 
 Although the difference is smaller than the difference observed between some lighting categories, it is still interesting. Urban and rural areas may have different roadway characteristics, traffic conditions, and typical travel speeds. These differences may contribute to the observed variation in injury severity.
 
