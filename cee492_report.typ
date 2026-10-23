@@ -452,6 +452,20 @@ Figure 10 illustrates the relationship between the number of vehicles involved i
 
 In contrast, the died prior to crash category shows negligible fractions regardless of the number of vehicles involved. Moreover, fatal injury and suspected serious injury are primarily concentrated in crashes involving one or two vehicles, with relatively small contributions from crashes involving more vehicles. Overall, the heatmap suggests that crash fractions generally decrease as the number of vehicles involved increases. Therefore, crashes involving one or two vehicles account for the most significant proportions of the observed injury severity outcomes.
 
+=== Number of Injuries and Injury Severity
+
+The horizontal stacked bar chart (Figure 11) illustrates the relationship between the number of injuries and injury severity by showing the percentage distribution of crashes within each severity category. Its purpose is to highlight how injury counts vary across severity levels and to identify whether certain severities are associated with a greater number of injured persons. Overall, the chart suggests that the number of injuries is related to crash severity, although the strength of this relationship differs by category.
+
+#figure(
+  image("figures/numinj_vs_severity.png", width: 100%),
+  caption: [Injury severity distribution by number of injuries in 2020.],
+)
+
+Several categories appear to be largely unaffected by the number of injuries. No Apparent Injury, No person involved, and Died Prior to Crash are almost entirely concentrated in the 0 injuries group, indicating that these categories do not meaningfully vary with higher injury counts. In contrast, among the five severity categories involving injured persons, 1 injury is the dominant group in every case, contributing more than half of the distribution for each category. This dominance is especially notable for Injured, Severity Unknown, where nearly 90% of crashes involve only one injury. Even for Fatal Injury, where the influence of multiple injuries is more visible, 1 injury still accounts for the largest share at roughly 55%.
+
+At the same time, the distribution of injury counts is more diverse in the Suspected Serious Injury and Fatal Injury categories, where crashes involving multiple injuries account for a larger proportion compared with less severe injury categories. This suggests that more severe crashes tend to be associated with a greater number of injured persons. Therefore, the graph suggests that the number of injuries could be related to injury severity, with higher-severity outcomes tending to show a broader mix of injury counts.
+
+
 == Relationships and Implications for Prediction
 
 The main objective of this project is to predict maximum injury severity. Therefore, our EDA focuses on identifying relationships that may help us select informative independent variables.
@@ -459,6 +473,8 @@ The main objective of this project is to predict maximum injury severity. Theref
 Our results show that the proportion of serious or fatal injuries varies across environmental and location categories. Among the variables investigated in this section, lighting conditions show a noticeable difference in the proportion of serious or fatal injuries. Urban or rural location also shows some variation, while weather conditions have relationships that may be influenced by other crash characteristics.
 
 The temporal analysis shows that crashes are more frequent during afternoon hours. However, crash frequency and injury severity are different outcomes. We should examine severity across time categories before deciding how useful crash timing is for prediction.
+
+The findings from crash characteristics analysis suggest that alcohol involvement, the number of vehicles, and the number of injuries are associated with crash severity in different ways. Alcohol involvement shows the clearest association with severe outcomes, particularly serious and fatal injuries. Meanwhile, one- and two-vehicle crashes account for the largest proportions across most severity categories, although this may reflect their higher frequency. Additionally, crashes involving multiple injuries represent a greater proportion of serious and fatal injury categories. These findings indicate potential relationships with injury severity, although further statistical analysis is needed to confirm their significance.
 
 === Relationships Between Predictors
 
