@@ -324,9 +324,7 @@ In addition to exploratory analysis, we plan to develop predictive models to inv
 
 = Exploratory Data Analysis
 
-== Selection of Variables
-
-As described above, we initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
+== Exploring Across Potential Variables
 
 We first examined the distribution of all 15 parameters across the 54,745 sampled crashes in 2020. The three overview figures describe the crashes in the sample before we focus on selected variables and their relationships with injury severity. Percentages in these overview figures are unweighted sample percentages.
 
@@ -350,6 +348,10 @@ Figure 2 shows that clear weather and daylight were the most common recorded con
 ) <fig-overview-context>
 
 Figure 3 summarizes crash circumstances and safety behavior. Speeding is based on whether any vehicle in the crash was coded as speeding. The seat-belt panel shows the proportion of eligible occupants with known belt status who used a belt; crashes without a known eligible occupant are omitted from that panel.
+
+== Selection of Variables
+
+As described above, we initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
 
 For the initial exploratory data analysis (EDA), we narrowed these parameters to eight: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, and urban or rural location. These parameters were selected based on their relevance to crash characteristics, injury outcomes, and our ultimate goal of predicting injury severity. This is an initial selection based on our research objectives, rather than the result of a completed statistical feature-selection analysis.
 
