@@ -326,7 +326,7 @@ In addition to exploratory analysis, we plan to develop predictive models to inv
 
 == Selection of Variables
 
-As described above, we initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
+We initially considered 15 parameters suggested by our team: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, urban or rural location, geographic region, work-zone involvement, collision type, speeding involvement, driver age, number of pedestrians, and seat belt use.
 
 For the initial exploratory data analysis (EDA), we narrowed these parameters to eight: injury severity, number of injuries, alcohol involvement, weather conditions, lighting conditions, number of vehicles, crash timing, and urban or rural location. These parameters were selected based on their relevance to crash characteristics, injury outcomes, and our ultimate goal of predicting injury severity. This is an initial selection based on our research objectives, rather than the result of a completed statistical feature-selection analysis.
 
