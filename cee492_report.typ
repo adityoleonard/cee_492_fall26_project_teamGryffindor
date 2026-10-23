@@ -334,7 +334,7 @@ We divided the EDA into two categories. The first focuses on environmental, temp
 
 == Environmental, Temporal, and Location Factors
 
-Our analysis focuses on the relationships between environmental conditions, crash timing, location, and injury severity. We used the 2020 crash-level CRSS dataset, which originally contains 54,745 sampled crash records. For the severity analysis, we retained 54,544 records with maximum injury severity coded from 0 to 4. We used the CRSS survey weights when calculating crash distributions and percentages.
+For the severity analysis, we retained 54,544 records with maximum injury severity coded from 0 to 4 from the data set. We used the CRSS survey weights when calculating crash distributions and percentages.
 
 Across these records, approximately 3.64% of weighted crashes involved serious or fatal injuries. However, this percentage is not the same under all conditions. Our objective is to investigate these differences and determine which parameters may be useful for predicting injury severity.
 
@@ -413,7 +413,7 @@ The temporal analysis shows that crashes are more frequent during afternoon hour
 
 An important consideration is that the independent variables may also be related to each other. For example, lighting conditions are related to the time of day, and weather conditions may affect visibility. Therefore, some predictors may provide overlapping information.
 
-We plan to investigate these relationships using suitable statistical methods. A correlation matrix may be useful for numerical variables, while categorical variables can be examined using contingency tables and measures such as Cramer's V.
+We plan to investigate these relationships using suitable statistical methods. A correlation matrix may be useful for numerical variables, while categorical variables can be examined using other methods.
 
 We should also consider the possibility that the relationship between one variable and injury severity changes depending on another variable. For example, the association between lighting and severity may differ between urban and rural locations.
 
