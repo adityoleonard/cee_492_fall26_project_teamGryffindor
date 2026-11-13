@@ -517,7 +517,7 @@ Following our class neural-network setup in Julia, we built the logistic regress
 
 Because our number features (HOUR_IM and log1p(VE_TOTAL)) were already scaled between 0 and 1 alongside our yes/no features, the model trained smoothly without extra z-score scaling. To be sure, we also tested z-score scaling (setting mean = 0 and standard deviation = 1), which gave nearly the exact same validation score (ROC-AUC = 0.6533, PR-AUC = 0.2629). As shown in Figure 1, a learning rate of 0.20 learned faster than 0.05 without jumping around, settling at a steady training error of about 0.402.
 
-#image("assets/fig1_logistic_convergence-1.png")
+
 
 Figure 1: Logistic Regression Training Convergence. A learning rate of 0.20 learns faster than 0.05 and settles at a steady training error of ~0.402.
 
@@ -529,11 +529,11 @@ To make sure our validation results were reliable and not due to one lucky data 
 
 When we ran our finished model on the 10,909 unseen test crashes, it earned a ROC-AUC score of 0.6186 and a Precision-Recall AUC score of 0.2241, which is 1.64 times better than random guessing at 0.1363 (Figure 2, right). Because all of the model's predicted risk scores fall below 50%, using a standard 0.500 cutoff creates a misleading accuracy trap: the model gets 86.37% accuracy simply by guessing that every single crash is minor, catching 0% of serious or fatal crashes.
 
-#image("assets/fig2_logistic_roc_pr.png")
+
 
 Figure 2: Cross-Validation ROC Curves (Left) and Final Test Precision-Recall Curve (Right). All five training folds cluster tightly around the average (0.628 ± 0.010), and test PR-AUC (0.224) beats the 0.136 majority baseline.
 
-#image("assets/fig3_logistic_thresholds-1.png")
+
 
 Figure 3: Score Trade-Offs Across Cutoffs. Lowering the cutoff from 0.500 to the validation-best 0.125 trades overall accuracy for higher severe-crash recall and the best F1 score.
 
@@ -552,11 +552,11 @@ Table 1: Final Test Set Scores Across Cutoffs and Imbalance Methods (N = 10,909)
 
 The model's learned weights show how much each factor raises or lowers severe injury risk compared to a clear, daytime crash in a city (Figure 4). Alcohol involvement (+1.06) is the biggest driver of severe injuries, followed by dark unlit roads (+0.61) and dark lit roads (+0.38). Conversely, vehicle count (−1.10) has the strongest negative weight because severe injuries mostly occur in high-speed one- or two-car crashes rather than slower multi-car pileups. To confirm which factors actually drive accuracy, we ran a feature-removal test by dropping one factor group at a time (Figure 5). Dropping Vehicle Count (−0.0262), Alcohol (−0.0226), or Lighting (−0.0187) caused the largest drops in validation ROC-AUC, while dropping Time of Day slightly improved the score (+0.0009). Finally, adding three combined interaction features (Alcohol × Dark Unlit, Alcohol × Rural, and Dark Unlit × Rural) slightly raised validation PR-AUC (0.2623 to 0.2644) while leaving ROC-AUC unchanged (0.6493), showing that simple two-way combinations only modestly sharpen precision.
 
-#image("assets/fig4_logistic_weights_labeled.png")
+
 
 Figure 4: Learned Logistic Regression Weights. Red bars raise severe injury risk (led by alcohol involvement and dark roads); blue bars lower risk (led by multi-car crashes and snow/rain).
 
-#image("assets/fig6_feature_ablation.png")
+
 
 Figure 5: Feature Ablation Impact on Validation ROC-AUC. Removing vehicle count, alcohol, or lighting causes the biggest drops in validation score, while removing time of day gives a tiny gain (+0.0009).
 
