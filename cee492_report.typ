@@ -572,7 +572,7 @@ The main strengths of this logistic regression model are that it is easy to unde
 
 Two rule-based classification models were developed to predict whether a traffic crash resulted in any injury. The first model used three variables: number of vehicles, alcohol involvement, and lighting conditions. The second model included six variables by adding weather conditions, crash time, and urban or rural location.
 
-Both models classified crashes as either no apparent injury (MAXSEV_IM = 0) or any injury (MAXSEV_IM = 1–4). The decision rules were manually defined based on the approach introduced in class.
+Both models classified crashes as either no apparent injury (MAXSEV_IM = 0) or any injury (MAXSEV_IM = 1–4).
 
 === Data Preparation and Evaluation
 
