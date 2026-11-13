@@ -510,11 +510,7 @@ The initial performance of these methods is evaluated and compared to identify t
 
 === Model Introduction
 
-Neural networks were also investigated for predicting crash injury severity. A multilayer perceptron (MLP) was selected because it can identify nonlinear relationships between the input variables and the output.
-
-The neural network consists of an input layer, two fully connected hidden layers, and an output layer. The hidden layers contain 64 and 32 neurons, respectively. The ReLU activation function was used, along with a dropout rate of 0.15 to reduce overfitting. The models were trained using cross-entropy loss.
-
-Four neural network models are considered in this analysis. Two models use all six selected input groups, with different output classifications. The other two models use separate groups of input variables to investigate their contributions to prediction performance.
+Neural networks were also investigated for predicting crash injury severity. A multilayer perceptron (MLP) was selected because it can identify nonlinear relationships between the input variables and the output.The neural network consists of an input layer, two fully connected hidden layers, and an output layer. The hidden layers contain 64 and 32 neurons, respectively. The ReLU activation function was used, along with a dropout rate of 0.15 to reduce overfitting. The models were trained using cross-entropy loss.Four neural network models are considered in this analysis. Two models use all six selected input groups, with different output classifications. The other two models use separate groups of input variables to investigate their contributions to prediction performance.
 
 === Data Preparation and Training
 
@@ -537,55 +533,36 @@ The 2020 CRSS dataset contains 54,544 crash records. The dataset was divided int
 
 The training data were used to estimate the model parameters, while the validation data were used to select the best training epoch. For the binary model, the classification threshold was also selected using the validation data. The test data were kept separate and used only for the final evaluation.
 
-The two models developed with all six input groups used the same training, validation, and test records.
-
-Six input groups were considered: weather conditions, lighting conditions, crash timing, urban or rural location, alcohol involvement, and number of vehicles. Crash timing includes the hour, day of the week, and month.
-
-The number of injuries was not included as an input because it is another crash outcome and could introduce data leakage.
+The two models developed with all six input groups used the same training, validation, and test records. Six input groups were considered: weather conditions, lighting conditions, crash timing, urban or rural location, alcohol involvement, and number of vehicles. Crash timing includes the hour, day of the week, and month.The number of injuries was not included as an input because it is another crash outcome and could introduce data leakage.
 
 === Model 1: Binary Classification Using Six Input Groups
 
-The first model was developed to classify crashes into two categories: fatal and nonfatal. All six input groups were included.
-
-The main purpose of this model is to investigate whether the selected crash characteristics can be used to identify fatal crashes.
+The first model was developed to classify crashes into two categories: fatal and nonfatal. All six input groups were included. The main purpose of this model is to investigate whether the selected crash characteristics can be used to identify fatal crashes.
 
 #figure(
   image("figures/01_binary_confusion.png", width: 90%),
   caption: [Confusion matrix of the binary neural network using the test dataset. Values represent the number of crashes and the percentage within each actual category.],
 )
 
-The model achieved a test accuracy of 91.6%. However, the confusion matrix shows that this accuracy does not represent the model's performance equally across both categories.
+The model achieved a test accuracy of 91.6%. However, the confusion matrix shows that this accuracy does not represent the model's performance equally across both categories. Among the 212 fatal crashes in the test dataset, 55 were correctly identified, while 157 were incorrectly classified as nonfatal. In addition, 531 nonfatal crashes were incorrectly classified as fatal.The recall for fatal crashes was 25.9%, and the precision was 9.4%. Therefore, most fatal crashes were not detected, and a large proportion of crashes predicted as fatal were actually nonfatal.
 
-Among the 212 fatal crashes in the test dataset, 55 were correctly identified, while 157 were incorrectly classified as nonfatal. In addition, 531 nonfatal crashes were incorrectly classified as fatal.
-
-The recall for fatal crashes was 25.9%, and the precision was 9.4%. Therefore, most fatal crashes were not detected, and a large proportion of crashes predicted as fatal were actually nonfatal.
-
-This result is mainly related to the imbalance between the two categories. The test dataset contains 7,970 nonfatal crashes and only 212 fatal crashes. A model that classifies every crash as nonfatal would achieve approximately 97.4% accuracy without identifying any fatal crash.
-
-Therefore, accuracy alone is not sufficient for evaluating this model. Recall, precision, and the confusion matrix provide additional information about its performance.
+This result is mainly related to the imbalance between the two categories. The test dataset contains 7,970 nonfatal crashes and only 212 fatal crashes. A model that classifies every crash as nonfatal would achieve approximately 97.4% accuracy without identifying any fatal crash. Therefore, accuracy alone is not sufficient for evaluating this model. Recall, precision, and the confusion matrix provide additional information about its performance.
 
 The results indicate that the model can identify some fatal crashes, but its performance is still limited. Further improvements are required to increase the detection of fatal crashes while reducing incorrect predictions.
 
 === Model 2: Five-Class Classification Using Six Input Groups
 
-The second model was developed using the same six input groups, but with five output categories: no apparent injury, possible injury, suspected minor injury, suspected serious injury, and fatal injury.
-
-This model provides a more detailed classification of crash severity. However, the prediction problem is also more difficult because differences between all five injury categories must be identified.
+The second model was developed using the same six input groups, but with five output categories: no apparent injury, possible injury, suspected minor injury, suspected serious injury, and fatal injury. This model provides a more detailed classification of crash severity. However, the prediction problem is also more difficult because differences between all five injury categories must be identified.
 
 #figure(
   image("figures/02_five_class_confusion.png", width: 96%),
   caption: [Confusion matrix of the five-class neural network using the test dataset. Values represent crash counts and percentages within each actual severity category.],
 )
 
-The model achieved a test accuracy of 44.5% and a macro-F1 score of 0.258.
 
-The confusion matrix shows that the model performed better for the no-injury category than for the more severe injury categories. Among 3,633 crashes with no apparent injury, 2,935 were correctly classified.
+The confusion matrix shows that the model performed better for the no-injury category than for the more severe injury categories. Among 3,633 crashes with no apparent injury, 2,935 were correctly classified. However, the performance was considerably lower for serious and fatal injuries. Only 163 of 970 suspected serious-injury crashes and 7 of 212 fatal crashes were correctly identified.
 
-However, the performance was considerably lower for serious and fatal injuries. Only 163 of 970 suspected serious-injury crashes and 7 of 212 fatal crashes were correctly identified.
-
-Many crashes were assigned to incorrect severity categories, including less severe categories. This indicates that the selected input variables do not provide enough information to clearly distinguish all five injury severity levels.
-
-Additional information, such as collision type, speed-related variables, and vehicle characteristics, may improve the model's performance. Different model settings and methods for handling class imbalance may also be investigated.
+Many crashes were assigned to incorrect severity categories, including less severe categories. This indicates that the selected input variables do not provide enough information to clearly distinguish all five injury severity levels. Additional information, such as collision type, speed-related variables, and vehicle characteristics, may improve the model's performance. Different model settings and methods for handling class imbalance may also be investigated.
 
 === Training Progress
 
@@ -594,13 +571,7 @@ Additional information, such as collision type, speed-related variables, and veh
   caption: [Training and validation loss of the binary and five-class neural networks. The dashed lines indicate the selected training epochs.],
 )
 
-The training progress of both neural networks is presented in the figure. The training and validation losses were monitored to evaluate model convergence and identify possible overfitting.
-
-The binary model was selected at epoch 2 based on validation average precision, while the five-class model was selected at epoch 13 based on validation macro-F1.
-
-The models were selected using validation performance rather than simply using the final training epoch.
-
-It should also be noted that the loss values of the two models are not directly comparable because different output classifications and class weights were used.
+The training progress of both neural networks is presented in the figure. The training and validation losses were monitored to evaluate model convergence and identify possible overfitting. The binary model was selected at epoch 2 based on validation average precision, while the five-class model was selected at epoch 13. The models were selected using validation performance rather than simply using the final training epoch. It should also be noted that the loss values of the two models are not directly comparable because different output classifications and class weights were used.
 
 === Comparison of the Two Models
 
@@ -610,21 +581,11 @@ It should also be noted that the loss values of the two models are not directly 
   caption: [Comparison of the confusion matrices for both neural networks using the same test dataset. Each cell represents the crash count and its percentage within the actual category.],
 )
 
-The combined confusion matrices provide a clear comparison of the prediction errors.
-
-The binary model correctly identified 55 fatal crashes, while the five-class model correctly classified only 7 fatal crashes. Although the binary model performed better at identifying fatal crashes, most fatal cases were still missed.
-
-The five-class model also had difficulty distinguishing between other injury severity categories.
-
-These results indicate that additional model development is necessary. In particular, the selection of input variables and the imbalance between injury severity categories should be investigated further.
+The combined confusion matrices provide a clear comparison of the prediction errors.The binary model correctly identified 55 fatal crashes, while the five-class model correctly classified only 7 fatal crashes. Although the binary model performed better at identifying fatal crashes, most fatal cases were still missed. The five-class model also had difficulty distinguishing between other injury severity categories. These results indicate that additional model development is necessary. In particular, the selection of input variables and the imbalance between injury severity categories should be investigated further.
 
 === Neural Networks Using Separate Input Groups
 
-Two additional neural network models are considered to investigate the predictive information provided by different groups of input variables.
-
-Both models use binary classification, with fatal and nonfatal crashes as the two output categories.
-
-The same training, validation, and test records should be used to allow a consistent comparison with the six-input binary model.
+Two additional neural network models are considered to investigate the predictive information provided by different groups of input variables. Both models use binary classification, with fatal and nonfatal crashes as the two output categories. The same training, validation, and test records should be used to allow a consistent comparison with the six-input binary model.
 
 ==== Model 3: Environmental, Temporal, and Location Factors
 
@@ -634,10 +595,4 @@ The same training, validation, and test records should be used to allow a consis
 
 === Initial Findings from Neural Networks
 
-The preliminary results indicate that predicting injury severity using the six selected input groups remains challenging.
-
-The binary model achieved high overall accuracy, but its ability to detect fatal crashes was limited. This difference was strongly influenced by the imbalance between fatal and nonfatal crashes.
-
-The five-class model achieved lower accuracy and had difficulty distinguishing between the different injury severity categories, particularly serious and fatal injuries.
-
-The results suggest that additional crash and vehicle information may be necessary to improve prediction performance. The use of different network architectures and methods for handling imbalanced classes may also be investigated.
+The preliminary results indicate that predicting injury severity using the six selected input groups remains challenging. The binary model achieved high overall accuracy, but its ability to detect fatal crashes was limited. This difference was strongly influenced by the imbalance between fatal and nonfatal crashes. The five-class model achieved lower accuracy and had difficulty distinguishing between the different injury severity categories, particularly serious and fatal injuries. The results suggest that additional crash and vehicle information may be necessary to improve prediction performance. The use of different network architectures and methods for handling imbalanced classes may also be investigated.
