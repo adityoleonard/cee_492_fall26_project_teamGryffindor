@@ -559,7 +559,7 @@ To fix this imbalance, we compared cutoff tuning against class-weighted training
   caption: [Final Test Set Scores Across Cutoffs and Imbalance Methods ($N = 10,909$).]
 ) <tbl-lr-results>
 
-=== 5. Which Factors Matter Most
+=== Which Factors Matter Most
 
 The model's learned weights show how much each factor raises or lowers severe injury risk compared to a clear, daytime crash in a city (@fig-lr-weights). Alcohol involvement (+1.06) is the biggest driver of severe injuries, followed by dark unlit roads (+0.61) and dark lit roads (+0.38). Conversely, vehicle count (−1.10) has the strongest negative weight because severe injuries mostly occur in high-speed one- or two-car crashes rather than slower multi-car pileups. To confirm which factors actually drive accuracy, we ran a feature-removal test by dropping one factor group at a time (@fig-lr-ablation). Dropping Vehicle Count (−0.0262), Alcohol (−0.0226), or Lighting (−0.0187) caused the largest drops in validation ROC-AUC, while dropping Time of Day slightly improved the score (+0.0009). Finally, adding three combined interaction features (Alcohol × Dark Unlit, Alcohol × Rural, and Dark Unlit × Rural) slightly raised validation PR-AUC (0.2623 to 0.2644) while leaving ROC-AUC unchanged (0.6493), showing that simple two-way combinations only modestly sharpen precision.
 
@@ -573,7 +573,7 @@ The model's learned weights show how much each factor raises or lowers severe in
   caption: [Feature Ablation Impact on Validation ROC-AUC. Removing vehicle count, alcohol, or lighting causes the biggest drops in validation score, while removing time of day gives a tiny gain (+0.0009).]
 ) <fig-lr-ablation>
 
-=== 6. Strengths, Limits, and Future Improvements
+=== Strengths, Limits, and Future Improvements
 
 The main strengths of this logistic regression model are that it is easy to understand, gives steady results across 5-fold cross-validation (0.6276 ± 0.0095), and reliably ranks high-risk crashes above low-risk ones. Its main limits are that a straight-line model cannot spot complex three-way combinations on its own, and training without survey weights matches our risk scores to our sample rate (14.45%) rather than the national severe crash rate (3.64%). To improve this logistic regression model in the future, we could drop noisy features like `HOUR_IM`, use L1 Lasso ($lambda = 0.001$) to build a simpler 7-feature model, add national CRSS survey weights during training so predicted risk scores match national rates, and include road speed-limit data.
 
