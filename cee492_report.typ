@@ -607,6 +607,22 @@ Figure 17 presents the confusion matrices of the neural network model, showing t
 
 ==== Model 4: Crash Characteristics
 
+Model 4 employed two input variables, alcohol involvement and the total number of vehicles involved in a crash, to predict crash severity as either fatal or other. The model was developed using a neural network with two hidden layers containing 64 and 32 neurons, respectively, both incorporating the ReLU activation function. Training was performed using SGD with a learning rate of 0.0003, a batch size of 32, and 100 training epochs. The model's classification performance was subsequently assessed through accuracy curves and confusion matrices to evaluate its ability to distinguish between the two severity categories.
+
+Almost similar to Model 3 training, Figure 18(a) shows that both training and validation losses decreased sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 18(b), both training and validation accuracies remained high at approximately 97.44%. However, Figure 18(c) shows that the balanced accuracy remained at 50%, while fatal recall stayed at 0% throughout the 100 epochs. These results indicate that the model predominantly classified crashes as Other and failed to identify fatal crashes, despite achieving high overall accuracy. This highlights the limitations of the model in handling the imbalanced dataset.
+
+#figure(
+  image("figures/Group2_Binary_Training.png", width: 100%),
+  caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using crash characteristics as input features.],
+)
+
+Figure 19 presents the confusion matrices for Group 2, illustrating the neural network's classification performance in distinguishing fatal and non-fatal crashes. Figure 19(a) shows the original confusion matrix, where the test dataset consists of 10,952 observations, including 10,667 non-fatal crashes (97.40%) and only 285 fatal crashes (2.60%). Among these observations, the model correctly identified 6,900 non-fatal crashes and 196 fatal crashes, while 3,767 non-fatal crashes were incorrectly predicted as fatal and 89 fatal crashes were incorrectly classified as non-fatal. Figure 19(b) displays the normalized confusion matrix, showing that the model correctly classified 64.7% of non-fatal crashes and 68.8% of fatal crashes. Compared to Group 1, Group 2 achieved a higher fatal recall (68.8% versus 48.9%) but a lower recall for non-fatal crashes (64.7% versus 70.4%). These findings suggest that Group 2 was more effective in identifying fatal crashes, although this improvement was accompanied by an increased number of non-fatal crashes incorrectly classified as fatal.
+
+#figure(
+  image("figures/Group2_Combined_Confusion_Matrices.png", width: 100%),
+  caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 4.],
+)
+
 === Comparison of the Four Neural Network Models
 
 === Initial Findings from Neural Networks
