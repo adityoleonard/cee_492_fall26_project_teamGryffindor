@@ -744,6 +744,53 @@ Figure 21 presents the confusion matrices for Model 4, illustrating the neural n
 
 === Comparison of the Four Neural Network Models
 
+Table X summarizes the classification performance of the four neural network models based on overall accuracy, balanced accuracy, and class-specific recall. Model 1 achieved the highest overall accuracy of 91.6%, primarily due to its strong performance in classifying non-fatal crashes (93.3%), while its accuracy in identifying fatal crashes was only 25.9%. Model 2, which classified crashes into five severity categories, achieved an overall accuracy of 44.5% and a balanced accuracy of 27.0%, indicating difficulties in distinguishing between different severity levels. Meanwhile, Model 3 achieved an overall accuracy of 69.8% and a balanced accuracy of 59.6%, with improvements in fatal crash classification compared to Model 1. Although Model 4 showed a lower overall accuracy of 64.8%, it achieved the highest balanced accuracy of 66.7% and the highest fatal crash recall of 68.8% among all models. This represents a substantial improvement in identifying fatal crashes compared to Model 1 (25.9%) and Model 3 (48.9%), although the recall for non-fatal crashes decreased to 64.7%. These findings suggest that Model 4, which utilizes alcohol involvement and the number of vehicles as input features, provides better sensitivity in identifying fatal crashes, making it a promising approach when detecting severe crash outcomes is a primary objective.
+
+#figure(
+  caption: [Attributes of the U.S. Traffic Accidents Dataset],
+  table(
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr),
+    align: (left, center, center, center, center),
+    inset: 7pt,
+
+    table.header(
+      [*Performance Metric*],
+      [*Model 1*],
+      [*Model 2*],
+      [*Model 3*],
+      [*Model 4*],
+    ),
+
+    [Number of Inputs], [6], [6], [4], [2],
+    [Number of Classes], [2], [5], [2], [2],
+
+    [*Overall Accuracy*],
+    [*91.6%*], [44.5%], [69.8%], [64.8%],
+
+    [*Balanced Accuracy*],
+    [59.6%], [27.0%], [59.6%], [*66.7%*],
+
+    [Other (Non-fatal)],
+    [93.3%], [—], [70.4%], [64.7%],
+
+    [No Injury],
+    [—], [80.8%], [—], [—],
+
+    [Possible Injury],
+    [—], [8.7%], [—], [—],
+
+    [Minor Injury],
+    [—], [25.4%], [—], [—],
+
+    [Serious Injury],
+    [—], [16.8%], [—], [—],
+
+    [*Fatal*],
+    [25.9%], [3.3%], [48.9%], [*68.8%*],
+  )
+)
+
+
 === Initial Findings from Neural Networks
 
 The preliminary results indicate that predicting injury severity using the six selected input groups remains challenging. The binary model achieved high overall accuracy, but its ability to detect fatal crashes was limited. This difference was strongly influenced by the imbalance between fatal and nonfatal crashes. The five-class model achieved lower accuracy and had difficulty distinguishing between the different injury severity categories, particularly serious and fatal injuries. The results suggest that additional crash and vehicle information may be necessary to improve prediction performance. The use of different network architectures and methods for handling imbalanced classes may also be investigated.
