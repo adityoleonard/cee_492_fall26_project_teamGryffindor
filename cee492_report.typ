@@ -604,23 +604,25 @@ The model achieved 56.67% accuracy, 59.60% precision, and 71.19% recall. It corr
 
 === Comparison and Discussion
 
-#table(
-  columns: (1.6fr, 1fr, 1fr),
-  align: (left, center, center),
-  inset: 6pt,
-  table.header(
-    [Performance],
-    [Three Rules],
-    [Six Rules],
-  ),
-  [Accuracy], [57.03%], [56.67%],
-  [Precision], [64.40%], [59.60%],
-  [Recall], [52.68%], [71.19%],
-  [Correct injuries], [3,231], [4,366],
-  [False alarms], [1,786], [2,960],
-  [Missed injuries], [2,902], [1,767],
+#figure(
+  caption: [Comparison of Model Performance of Decision-Tree Models with Three and Six Rules],
+  table(
+    columns: (1.6fr, 1fr, 1fr),
+    align: (left, center, center),
+    inset: 6pt,
+    table.header(
+      [Performance],
+      [Three Rules],
+      [Six Rules],
+    ),
+    [Accuracy], [57.03%], [56.67%],
+    [Precision], [64.40%], [59.60%],
+    [Recall], [52.68%], [71.19%],
+    [Correct injuries], [3,231], [4,366],
+    [False alarms], [1,786], [2,960],
+    [Missed injuries], [2,902], [1,767],
+  )
 )
-
 The three-rule model achieved slightly higher accuracy and precision, while the six-rule model improved recall by 18.51 percentage points. This improvement came with an increase in false-positive predictions.
 
 For traffic safety analysis, the six-rule model may be preferred when identifying injury crashes is the main priority. However, both models showed limited overall predictive performance. Further improvements could be achieved by training a decision tree to determine splitting rules automatically rather than selecting them manually.
@@ -634,20 +636,22 @@ Neural networks were also investigated for predicting crash injury severity. A m
 === Data Preparation and Training
 
 The 2020 CRSS dataset contains 54,544 crash records. The dataset was divided into three subsets: training, validation, and testing. A stratified split was used to maintain approximately similar injury severity distributions across the subsets.
-
-#table(
-  columns: (1.5fr, 1fr, 1fr),
-  align: (left, center, center),
-  inset: 7pt,
-  table.header(
-    [*Dataset*],
-    [*Number of Records*],
-    [*Percentage*],
-  ),
-  [Training], [38,180], [70%],
-  [Validation], [8,182], [15%],
-  [Testing], [8,182], [15%],
-  [*Total*], [*54,544*], [*100%*],
+#figure(
+  caption: [Splitting Dataset into Training, Validation, and Testing Subsets],
+  table(
+    columns: (1.5fr, 1fr, 1fr),
+    align: (left, center, center),
+    inset: 7pt,
+    table.header(
+      [*Dataset*],
+      [*Number of Records*],
+      [*Percentage*],
+    ),
+    [Training], [38,180], [70%],
+    [Validation], [8,182], [15%],
+    [Testing], [8,182], [15%],
+    [*Total*], [*54,544*], [*100%*],
+  )
 )
 
 The training data were used to estimate the model parameters, while the validation data were used to select the best training epoch. For the binary model, the classification threshold was also selected using the validation data. The test data were kept separate and used only for the final evaluation.
@@ -744,10 +748,10 @@ Figure 21 presents the confusion matrices for Model 4, illustrating the neural n
 
 === Comparison of the Four Neural Network Models
 
-Table X summarizes the classification performance of the four neural network models based on overall accuracy, balanced accuracy, and class-specific recall. Model 1 achieved the highest overall accuracy of 91.6%, primarily due to its strong performance in classifying non-fatal crashes (93.3%), while its accuracy in identifying fatal crashes was only 25.9%. Model 2, which classified crashes into five severity categories, achieved an overall accuracy of 44.5% and a balanced accuracy of 27.0%, indicating difficulties in distinguishing between different severity levels. Meanwhile, Model 3 achieved an overall accuracy of 69.8% and a balanced accuracy of 59.6%, with improvements in fatal crash classification compared to Model 1. Although Model 4 showed a lower overall accuracy of 64.8%, it achieved the highest balanced accuracy of 66.7% and the highest fatal crash recall of 68.8% among all models. This represents a substantial improvement in identifying fatal crashes compared to Model 1 (25.9%) and Model 3 (48.9%), although the recall for non-fatal crashes decreased to 64.7%. These findings suggest that Model 4, which utilizes alcohol involvement and the number of vehicles as input features, provides better sensitivity in identifying fatal crashes, making it a promising approach when detecting severe crash outcomes is a primary objective.
+Table 4 summarizes the classification performance of the four neural network models based on overall accuracy, balanced accuracy, and class-specific recall. Model 1 achieved the highest overall accuracy of 91.6%, primarily due to its strong performance in classifying non-fatal crashes (93.3%), while its accuracy in identifying fatal crashes was only 25.9%. Model 2, which classified crashes into five severity categories, achieved an overall accuracy of 44.5% and a balanced accuracy of 27.0%, indicating difficulties in distinguishing between different severity levels. Meanwhile, Model 3 achieved an overall accuracy of 69.8% and a balanced accuracy of 59.6%, with improvements in fatal crash classification compared to Model 1. Although Model 4 showed a lower overall accuracy of 64.8%, it achieved the highest balanced accuracy of 66.7% and the highest fatal crash recall of 68.8% among all models. This represents a substantial improvement in identifying fatal crashes compared to Model 1 (25.9%) and Model 3 (48.9%), although the recall for non-fatal crashes decreased to 64.7%. These findings suggest that Model 4, which utilizes alcohol involvement and the number of vehicles as input features, provides better sensitivity in identifying fatal crashes, making it a promising approach when detecting severe crash outcomes is a primary objective.
 
 #figure(
-  caption: [Attributes of the U.S. Traffic Accidents Dataset],
+  caption: [Comparison of the four neural network models],
   table(
     columns: (1.5fr, 1fr, 1fr, 1fr, 1fr),
     align: (left, center, center, center, center),
