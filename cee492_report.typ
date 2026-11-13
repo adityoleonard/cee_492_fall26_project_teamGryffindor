@@ -504,6 +504,8 @@ The initial performance of these methods is evaluated and compared to identify t
 
 == Regression-Based Classification
 
+== Predictive Modeling: Crash Injury Severity (Logistic Regression)
+
 === 1. Objective and Problem Setup
 
 The goal of this study is to predict whether a car crash causes a serious or fatal injury (Class 1) or no injury / minor injury (Class 0) using 2020 CRSS crash data. The serious or fatal group includes severity codes 3 and 4, which make up 14.45% of our data sample. To make fair predictions without cheating, we left out the total number of injured people (`NO_INJ_IM`) because post-crash injury counts already give away the answer. Instead, we built 20 input features from six factors known at the time of the crash: weather, lighting, time of day, urban or rural area, alcohol involvement, and the number of vehicles (adjusted using a log scale so rare multi-car pileups do not skew typical one- and two-car crashes). Using a fixed random seed of 42, we split the 54,544 crashes into 64% for training (34,908 crashes), 16% for validation (8,727 crashes), and 20% for final testing (10,909 crashes). All model adjustments were done using only the validation set so the test set stayed completely untouched until the end.
@@ -577,8 +579,66 @@ The model's learned weights show how much each factor raises or lowers severe in
 
 The main strengths of this logistic regression model are that it is easy to understand, gives steady results across 5-fold cross-validation (0.6276 ± 0.0095), and reliably ranks high-risk crashes above low-risk ones. Its main limits are that a straight-line model cannot spot complex three-way combinations on its own, and training without survey weights matches our risk scores to our sample rate (14.45%) rather than the national severe crash rate (3.64%). To improve this logistic regression model in the future, we could drop noisy features like `HOUR_IM`, use L1 Lasso ($lambda = 0.001$) to build a simpler 7-feature model, add national CRSS survey weights during training so predicted risk scores match national rates, and include road speed-limit data.
 
-
 == Tree-Based Models
+
+=== Model Introduction
+
+Two rule-based classification models were developed to predict whether a traffic crash resulted in any injury. The first model used three variables: number of vehicles, alcohol involvement, and lighting conditions. The second model included six variables by adding weather conditions, crash time, and urban or rural location.
+
+Both models classified crashes as either no apparent injury (MAXSEV_IM = 0) or any injury (MAXSEV_IM = 1–4).
+
+=== Data Preparation and Evaluation
+
+The analysis used 2020 CRSS accident, person, and vehicle records linked by CASENUM. A total of 54,544 crashes with valid injury severity codes were retained. The dataset was divided into 43,635 reserved training records (80%) and 10,909 testing records (20%).
+
+Both models were evaluated using the same test records. Since the decision rules were predetermined, the training records were not used to estimate model parameters. Performance was evaluated using accuracy, precision, recall, and confusion matrices.
+
+=== Model 1: Three Decision Rules
+
+The first model predicted an injury based on three conditions: one vehicle involved, alcohol involvement, or dark but lighted conditions.
+
+#figure(
+  image("figures/decision_tree_confusion_3rules_blue.png", width: 85%),
+  caption: [Confusion matrix for the three-rule classification model.],
+)
+
+The model achieved 57.03% accuracy, 64.40% precision, and 52.68% recall. It correctly identified 3,231 injury crashes but missed 2,902 injury crashes. These results indicate that the model produced relatively fewer false alarms but failed to identify many actual injuries.
+
+=== Model 2: Six Decision Rules
+
+The second model added weather conditions, crash time, and urban or rural location to the original three decision rules.
+
+#figure(
+  image("figures/decision_tree_confusion_6rules_blue.png", width: 85%),
+  caption: [Confusion matrix for the six-rule classification model.],
+)
+
+The model achieved 56.67% accuracy, 59.60% precision, and 71.19% recall. It correctly identified 4,366 injury crashes and missed 1,767. Although its accuracy was slightly lower, the additional rules increased the proportion of injury crashes detected.
+
+=== Comparison and Discussion
+
+#figure(
+  caption: [Comparison of Model Performance of Decision-Tree Models with Three and Six Rules],
+  table(
+    columns: (1.6fr, 1fr, 1fr),
+    align: (left, center, center),
+    inset: 6pt,
+    table.header(
+      [Performance],
+      [Three Rules],
+      [Six Rules],
+    ),
+    [Accuracy], [57.03%], [56.67%],
+    [Precision], [64.40%], [59.60%],
+    [Recall], [52.68%], [71.19%],
+    [Correct injuries], [3,231], [4,366],
+    [False alarms], [1,786], [2,960],
+    [Missed injuries], [2,902], [1,767],
+  )
+)
+The three-rule model achieved slightly higher accuracy and precision, while the six-rule model improved recall by 18.51 percentage points. This improvement came with an increase in false-positive predictions.
+
+For traffic safety analysis, the six-rule model may be preferred when identifying injury crashes is the main priority. However, both models showed limited overall predictive performance. Further improvements could be achieved by training a decision tree to determine splitting rules automatically rather than selecting them manually.
 
 == Neural Network Models
 
@@ -589,20 +649,22 @@ Neural networks were also investigated for predicting crash injury severity. A m
 === Data Preparation and Training
 
 The 2020 CRSS dataset contains 54,544 crash records. The dataset was divided into three subsets: training, validation, and testing. A stratified split was used to maintain approximately similar injury severity distributions across the subsets.
-
-#table(
-  columns: (1.5fr, 1fr, 1fr),
-  align: (left, center, center),
-  inset: 7pt,
-  table.header(
-    [*Dataset*],
-    [*Number of Records*],
-    [*Percentage*],
-  ),
-  [Training], [38,180], [70%],
-  [Validation], [8,182], [15%],
-  [Testing], [8,182], [15%],
-  [*Total*], [*54,544*], [*100%*],
+#figure(
+  caption: [Splitting Dataset into Training, Validation, and Testing Subsets],
+  table(
+    columns: (1.5fr, 1fr, 1fr),
+    align: (left, center, center),
+    inset: 7pt,
+    table.header(
+      [*Dataset*],
+      [*Number of Records*],
+      [*Percentage*],
+    ),
+    [Training], [38,180], [70%],
+    [Validation], [8,182], [15%],
+    [Testing], [8,182], [15%],
+    [*Total*], [*54,544*], [*100%*],
+  )
 )
 
 The training data were used to estimate the model parameters, while the validation data were used to select the best training epoch. For the binary model, the classification threshold was also selected using the validation data. The test data were kept separate and used only for the final evaluation.
@@ -663,9 +725,88 @@ Two additional neural network models are considered to investigate the predictiv
 
 ==== Model 3: Environmental, Temporal, and Location Factors
 
+Model 3 utilized four input features: weather conditions, lighting conditions, hour, and urban/rural conditions, to classify crash severity into two categories: fatal and other. The neural network architecture consisted of two hidden layers with 64 and 32 neurons, respectively, using the Rectified Linear Unit (ReLU) activation function. The model was trained using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 epochs. Finally, the model's performance was evaluated using accuracy curves and confusion matrices to assess its classification performance for both severity categories.
+
+Figure 18(a) depicts that both training and validation losses went down sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 18(b), neural network achieved approximately 97.43% classification accuracy during training and validation. However, this high accuracy was primarily associated with the imbalanced class distribution, as nonfatal crashes accounted for approximately 97.43% of the observations. The model achieved a balanced accuracy of 50% and a fatal-class recall of 0% (Figure 16(c)), indicating that it failed to identify fatal crashes at the selected classification threshold of 0.5. Although the training and validation losses decreased and showed no substantial divergence, the model's classification performance remained limited.
+
+#figure(
+  image("figures/Group1_Binary_Training.png", width: 95%),
+  caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using environmental, temporal, and location factors as input features.],
+)
+
+Figure 19 presents the confusion matrices of the neural network model, showing the classification results for fatal and other (non-fatal) crashes. A confusion matrix compares the actual and predicted classes, where correctly classified observations are typically represented by the diagonal elements. However, in this figure, the correct predictions appear in the upper-right and lower-left cells because the actual and predicted class labels are arranged in different orders. Figure 19(a) shows the original confusion matrix, indicating that the test dataset is highly imbalanced, with 10,604 observations (97.43%) belonging to the Other class and only 280 observations (2.57%) belonging to the Fatal class. Among these observations, the model correctly classified 7,461 non-fatal crashes and 137 fatal crashes, while 3,143 non-fatal crashes were incorrectly classified as fatal and 143 fatal crashes were incorrectly classified as non-fatal. Figure 19(b) presents the normalized confusion matrix, which illustrates the proportion of correctly and incorrectly classified observations within each class. The results show that the neural network correctly classified 70.4% of non-fatal crashes and 48.9% of fatal crashes. Overall, the neural network achieved an **overall classification accuracy of 69.8%**, correctly predicting 7,598 out of 10,884 observations. However, the **balanced accuracy was 59.6%**, representing the average classification accuracy across the Fatal and Other classes. These findings indicate that the model performed better in identifying non-fatal crashes than fatal crashes.
+
+#figure(
+  image("figures/Group1_Combined_Confusion_Matrices.png", width: 100%),
+  caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 3.],
+)
+
 ==== Model 4: Crash Characteristics
 
+Model 4 employed two input variables, alcohol involvement and the total number of vehicles involved in a crash, to predict crash severity as either fatal or other. The model was developed using a neural network with two hidden layers containing 64 and 32 neurons, respectively, both incorporating the ReLU activation function. Training was performed using SGD with a learning rate of 0.0003, a batch size of 32, and 100 training epochs. The model's classification performance was subsequently assessed through accuracy curves and confusion matrices to evaluate its ability to distinguish between the two severity categories.
+
+Almost similar to Model 3 training, Figure 20(a) shows that both training and validation losses decreased sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 20(b), both training and validation accuracies remained high at approximately 97.44%. However, Figure 20(c) shows that the balanced accuracy remained at 50%, while fatal recall stayed at 0% throughout the 100 epochs. These results indicate that the model predominantly classified crashes as Other and failed to identify fatal crashes, despite achieving high overall accuracy. This highlights the limitations of the model in handling the imbalanced dataset.
+
+#figure(
+  image("figures/Group2_Binary_Training.png", width: 100%),
+  caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using crash characteristics as input features.],
+)
+
+Figure 21 presents the confusion matrices for Model 4, illustrating the neural network's classification performance in distinguishing fatal and non-fatal crashes. Figure 19(a) shows the original confusion matrix, where the test dataset consists of 10,952 observations, including 10,667 non-fatal crashes (97.40%) and only 285 fatal crashes (2.60%). Among these observations, the model correctly identified 6,900 non-fatal crashes and 196 fatal crashes, while 3,767 non-fatal crashes were incorrectly predicted as fatal and 89 fatal crashes were incorrectly classified as non-fatal. Figure 19(b) displays the normalized confusion matrix, showing that the model correctly classified 64.7% of non-fatal crashes and 68.8% of fatal crashes. Overall, Model 4 achieved an overall classification accuracy of 64.8%, correctly predicting 7,096 out of 10,952 observations, while the balanced accuracy was 66.7%, reflecting the average classification accuracy across the Fatal and Other classes. Compared to Model 3, Model 4 achieved a higher fatal recall (68.8% versus 48.9%) but a lower recall for non-fatal crashes (64.7% versus 70.4%). These findings suggest that Model 4 was more effective than Model 3 in identifying fatal crashes, although this improvement was accompanied by an increased number of non-fatal crashes incorrectly classified as fatal.
+
+#figure(
+  image("figures/Group2_Combined_Confusion_Matrices.png", width: 100%),
+  caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 4.],
+)
+
 === Comparison of the Four Neural Network Models
+
+Table 4 summarizes the classification performance of the four neural network models based on overall accuracy, balanced accuracy, and class-specific recall. Model 1 achieved the highest overall accuracy of 91.6%, primarily due to its strong performance in classifying non-fatal crashes (93.3%), while its accuracy in identifying fatal crashes was only 25.9%. Model 2, which classified crashes into five severity categories, achieved an overall accuracy of 44.5% and a balanced accuracy of 27.0%, indicating difficulties in distinguishing between different severity levels. Meanwhile, Model 3 achieved an overall accuracy of 69.8% and a balanced accuracy of 59.6%, with improvements in fatal crash classification compared to Model 1. Although Model 4 showed a lower overall accuracy of 64.8%, it achieved the highest balanced accuracy of 66.7% and the highest fatal crash recall of 68.8% among all models. This represents a substantial improvement in identifying fatal crashes compared to Model 1 (25.9%) and Model 3 (48.9%), although the recall for non-fatal crashes decreased to 64.7%. These findings suggest that Model 4, which utilizes alcohol involvement and the number of vehicles as input features, provides better sensitivity in identifying fatal crashes, making it a promising approach when detecting severe crash outcomes is a primary objective.
+
+#figure(
+  caption: [Comparison of the four neural network models],
+  table(
+    columns: (1.5fr, 1fr, 1fr, 1fr, 1fr),
+    align: (left, center, center, center, center),
+    inset: 7pt,
+
+    table.header(
+      [*Performance Metric*],
+      [*Model 1*],
+      [*Model 2*],
+      [*Model 3*],
+      [*Model 4*],
+    ),
+
+    [Number of Inputs], [6], [6], [4], [2],
+    [Number of Classes], [2], [5], [2], [2],
+
+    [*Overall Accuracy*],
+    [*91.6%*], [44.5%], [69.8%], [64.8%],
+
+    [*Balanced Accuracy*],
+    [59.6%], [27.0%], [59.6%], [*66.7%*],
+
+    [Other (Non-fatal)],
+    [93.3%], [—], [70.4%], [64.7%],
+
+    [No Injury],
+    [—], [80.8%], [—], [—],
+
+    [Possible Injury],
+    [—], [8.7%], [—], [—],
+
+    [Minor Injury],
+    [—], [25.4%], [—], [—],
+
+    [Serious Injury],
+    [—], [16.8%], [—], [—],
+
+    [*Fatal*],
+    [25.9%], [3.3%], [48.9%], [*68.8%*],
+  )
+)
+
 
 === Initial Findings from Neural Networks
 
