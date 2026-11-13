@@ -589,6 +589,22 @@ Two additional neural network models are considered to investigate the predictiv
 
 ==== Model 3: Environmental, Temporal, and Location Factors
 
+Model 3 utilized four input features: weather conditions, lighting conditions, hour, and urban/rural conditions, to classify crash severity into two categories: fatal and other. The neural network architecture consisted of two hidden layers with 64 and 32 neurons, respectively, using the Rectified Linear Unit (ReLU) activation function. The model was trained using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 epochs. Finally, the model's performance was evaluated using accuracy curves and confusion matrices to assess its classification performance for both severity categories.
+
+Figure 16(a) depicts that both training and validation losses went down sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 16(b), neural network achieved approximately 97.43% classification accuracy during training and validation. However, this high accuracy was primarily associated with the imbalanced class distribution, as nonfatal crashes accounted for approximately 97.43% of the observations. The model achieved a balanced accuracy of 50% and a fatal-class recall of 0% (Figure 16(c)), indicating that it failed to identify fatal crashes at the selected classification threshold of 0.5. Although the training and validation losses decreased and showed no substantial divergence, the model's classification performance remained limited.
+
+#figure(
+  image("figures/Group1_Binary_Training.png", width: 95%),
+  caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using environmental, temporal, and location factors as input features.],
+)
+
+Figure 17 presents the confusion matrices of the neural network model, showing the classification results for fatal and other (non-fatal) crashes. A confusion matrix compares the actual and predicted classes, where correctly classified observations are typically represented by the diagonal elements. However, in this figure, the correct predictions appear in the upper-right and lower-left cells because the actual and predicted class labels are arranged in different orders. Figure 17(a) shows the original confusion matrix, indicating that the test dataset is highly imbalanced, with 10,604 observations (97.43%) belonging to the Other class and only 280 observations (2.57%) belonging to the Fatal class. Among these observations, the model correctly classified 7,461 non-fatal crashes and 137 fatal crashes, while 3,143 non-fatal crashes were incorrectly classified as fatal and 143 fatal crashes were incorrectly classified as non-fatal. Figure 17(b) presents the normalized confusion matrix, which illustrates the proportion of correctly and incorrectly classified observations within each class. The results show that the neural network correctly classified 70.4% of non-fatal crashes and 48.9% of fatal crashes. These findings indicate that the model performed better in identifying non-fatal crashes than fatal crashes.
+
+#figure(
+  image("figures/Group1_Combined_Confusion_Matrices.png", width: 100%),
+  caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 3.],
+)
+
 ==== Model 4: Crash Characteristics
 
 === Comparison of the Four Neural Network Models
