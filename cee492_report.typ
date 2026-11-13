@@ -568,6 +568,63 @@ The main strengths of this logistic regression model are that it is easy to unde
 
 == Tree-Based Models
 
+=== Model Introduction
+
+Two rule-based classification models were developed to predict whether a traffic crash resulted in any injury. The first model used three variables: number of vehicles, alcohol involvement, and lighting conditions. The second model included six variables by adding weather conditions, crash time, and urban or rural location.
+
+Both models classified crashes as either no apparent injury (MAXSEV_IM = 0) or any injury (MAXSEV_IM = 1–4). The decision rules were manually defined based on the approach introduced in class.
+
+=== Data Preparation and Evaluation
+
+The analysis used 2020 CRSS accident, person, and vehicle records linked by CASENUM. A total of 54,544 crashes with valid injury severity codes were retained. The dataset was divided into 43,635 reserved training records (80%) and 10,909 testing records (20%).
+
+Both models were evaluated using the same test records. Since the decision rules were predetermined, the training records were not used to estimate model parameters. Performance was evaluated using accuracy, precision, recall, and confusion matrices.
+
+=== Model 1: Three Decision Rules
+
+The first model predicted an injury based on three conditions: one vehicle involved, alcohol involvement, or dark but lighted conditions.
+
+#figure(
+  image("figures/decision_tree_confusion_3rules_blue.png", width: 85%),
+  caption: [Confusion matrix for the three-rule classification model.],
+)
+
+The model achieved 57.03% accuracy, 64.40% precision, and 52.68% recall. It correctly identified 3,231 injury crashes but missed 2,902 injury crashes. These results indicate that the model produced relatively fewer false alarms but failed to identify many actual injuries.
+
+=== Model 2: Six Decision Rules
+
+The second model added weather conditions, crash time, and urban or rural location to the original three decision rules.
+
+#figure(
+  image("figures/decision_tree_confusion_6rules_blue.png", width: 85%),
+  caption: [Confusion matrix for the six-rule classification model.],
+)
+
+The model achieved 56.67% accuracy, 59.60% precision, and 71.19% recall. It correctly identified 4,366 injury crashes and missed 1,767. Although its accuracy was slightly lower, the additional rules increased the proportion of injury crashes detected.
+
+=== Comparison and Discussion
+
+#table(
+  columns: (1.6fr, 1fr, 1fr),
+  align: (left, center, center),
+  inset: 6pt,
+  table.header(
+    [Performance],
+    [Three Rules],
+    [Six Rules],
+  ),
+  [Accuracy], [57.03%], [56.67%],
+  [Precision], [64.40%], [59.60%],
+  [Recall], [52.68%], [71.19%],
+  [Correct injuries], [3,231], [4,366],
+  [False alarms], [1,786], [2,960],
+  [Missed injuries], [2,902], [1,767],
+)
+
+The three-rule model achieved slightly higher accuracy and precision, while the six-rule model improved recall by 18.51 percentage points. This improvement came with an increase in false-positive predictions.
+
+For traffic safety analysis, the six-rule model may be preferred when identifying injury crashes is the main priority. However, both models showed limited overall predictive performance. Further improvements could be achieved by training a decision tree to determine splitting rules automatically rather than selecting them manually.
+
 == Neural Network Models
 
 === Model Introduction
