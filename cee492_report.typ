@@ -435,7 +435,7 @@ In addition to environmental, temporal, and location factors, this study also ex
 Figure 9 compares the distribution of injury severity conditional on alcohol involvement. The bars on the left show the percentage of crashes without alcohol involvement, while the bars on the right show the percentage of crashes with alcohol involvement. In other words, each side represents how injury severity is distributed within that alcohol category, allowing a direct comparison of crash outcomes between non-alcohol-related and alcohol-related crashes.
 
 #figure(
-  image("figures/alc_vs_severity.png", width: 100%),
+  image("figures/alc_vs_severity_rev.png", width: 120%),
   caption: [Injury severity distribution by alcohol involvement in 2020.],
 )
 
@@ -448,7 +448,7 @@ In contrast, crashes involving alcohol show a clear shift toward more severe out
 Figure 10 illustrates the relationship between the number of vehicles involved in crashes and injury severity. The heatmap indicates that one-vehicle and two-vehicle crashes contribute the largest fractions across several injury severity categories. The most noticeable pattern is observed for no apparent injury, where two-vehicle crashes account for the largest proportion. Similarly, possible injury is strongly associated with crashes involving two vehicles.
 
 #figure(
-  image("figures/total_vehicle_vs_severity.png", width: 100%),
+  image("figures/total_vehicle_vs_severity_rev.png", width: 120%),
   caption: [Injury severity distribution by total vehicles involved in 2020.],
 )
 
@@ -459,7 +459,7 @@ In contrast, the died prior to crash category shows negligible fractions regardl
 The horizontal stacked bar chart (Figure 11) illustrates the relationship between the number of injuries and injury severity by showing the percentage distribution of crashes within each severity category. Its purpose is to highlight how injury counts vary across severity levels and to identify whether certain severities are associated with a greater number of injured persons. Overall, the chart suggests that the number of injuries is related to crash severity, although the strength of this relationship differs by category.
 
 #figure(
-  image("figures/numinj_vs_severity.png", width: 100%),
+  image("figures/numinj_vs_severity_rev.png", width: 115%),
   caption: [Injury severity distribution by number of injuries in 2020.],
 )
 
@@ -728,14 +728,14 @@ Model 3 utilized four input features: weather conditions, lighting conditions, h
 Figure 23(a) depicts that both training and validation losses went down sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 23(b), neural network achieved approximately 97.43% classification accuracy during training and validation. However, this high accuracy was primarily associated with the imbalanced class distribution, as nonfatal crashes accounted for approximately 97.43% of the observations. The model achieved a balanced accuracy of 50% and a fatal-class recall of 0% (Figure 16(c)), indicating that it failed to identify fatal crashes at the selected classification threshold of 0.5. Although the training and validation losses decreased and showed no substantial divergence, the model's classification performance remained limited.
 
 #figure(
-  image("figures/Group1_Binary_Training.png", width: 95%),
+  image("figures/Model3_Binary_Training_rev.png", width: 75%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using environmental, temporal, and location factors as input features.],
 )
 
 Figure 24 presents the confusion matrices of the neural network model, showing the classification results for fatal and other (non-fatal) crashes. A confusion matrix compares the actual and predicted classes, where correctly classified observations are typically represented by the diagonal elements. However, in this figure, the correct predictions appear in the upper-right and lower-left cells because the actual and predicted class labels are arranged in different orders. Figure 24(a) shows the original confusion matrix, indicating that the test dataset is highly imbalanced, with 10,604 observations (97.43%) belonging to the Other class and only 280 observations (2.57%) belonging to the Fatal class. Among these observations, the model correctly classified 7,461 non-fatal crashes and 137 fatal crashes, while 3,143 non-fatal crashes were incorrectly classified as fatal and 143 fatal crashes were incorrectly classified as non-fatal. Figure 24(b) presents the normalized confusion matrix, which illustrates the proportion of correctly and incorrectly classified observations within each class. The results show that the neural network correctly classified 70.4% of non-fatal crashes and 48.9% of fatal crashes. Overall, the neural network achieved an **overall classification accuracy of 69.8%**, correctly predicting 7,598 out of 10,884 observations. However, the balanced accuracy was 59.6%, representing the average classification accuracy across the Fatal and Other classes. These findings indicate that the model performed better in identifying non-fatal crashes than fatal crashes.
 
 #figure(
-  image("figures/Group1_Combined_Confusion_Matrices.png", width: 100%),
+  image("figures/Group1_Combined_Confusion_Matrices.png", width: 110%),
   caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 3.],
 )
 
@@ -746,14 +746,14 @@ Model 4 employed two input variables, alcohol involvement and the total number o
 Almost similar to Model 3 training, Figure 25(a) shows that both training and validation losses decreased sharply during the initial epochs before gradually stabilizing at approximately 0.38. As shown in Figure 25(b), both training and validation accuracies remained high at approximately 97.44%. However, Figure 20(c) shows that the balanced accuracy remained at 50%, while fatal recall stayed at 0% throughout the 100 epochs. These results indicate that the model predominantly classified crashes as Other and failed to identify fatal crashes, despite achieving high overall accuracy. This highlights the limitations of the model in handling the imbalanced dataset.
 
 #figure(
-  image("figures/Group2_Binary_Training.png", width: 100%),
+  image("figures/Model4_Binary_Training_rev.png", width: 75%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using crash characteristics as input features.],
 )
 
 Figure 26 presents the confusion matrices for Model 4, illustrating the neural network's classification performance in distinguishing fatal and non-fatal crashes. Figure 26(a) shows the original confusion matrix, where the test dataset consists of 10,952 observations, including 10,667 non-fatal crashes (97.40%) and only 285 fatal crashes (2.60%). Among these observations, the model correctly identified 6,900 non-fatal crashes and 196 fatal crashes, while 3,767 non-fatal crashes were incorrectly predicted as fatal and 89 fatal crashes were incorrectly classified as non-fatal. Figure 26(b) displays the normalized confusion matrix, showing that the model correctly classified 64.7% of non-fatal crashes and 68.8% of fatal crashes. Overall, Model 4 achieved an overall classification accuracy of 64.8%, correctly predicting 7,096 out of 10,952 observations, while the balanced accuracy was 66.7%, reflecting the average classification accuracy across the Fatal and Other classes. Compared to Model 3, Model 4 achieved a higher fatal recall (68.8% versus 48.9%) but a lower recall for non-fatal crashes (64.7% versus 70.4%). These findings suggest that Model 4 was more effective than Model 3 in identifying fatal crashes, although this improvement was accompanied by an increased number of non-fatal crashes incorrectly classified as fatal.
 
 #figure(
-  image("figures/Group2_Combined_Confusion_Matrices.png", width: 100%),
+  image("figures/Group2_Combined_Confusion_Matrices.png", width: 110%),
   caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 4.],
 )
 
