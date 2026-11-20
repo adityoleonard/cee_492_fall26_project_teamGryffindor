@@ -1,5 +1,10 @@
 #import "@preview/ieee-monolith:0.1.0": ieee
 
+#set page(
+  numbering: "1",
+  number-align: center + bottom,
+)
+
 #show: ieee.with(
   title: [Exploratory Analysis and Data-Driven Insights into U.S. Traffic Accidents],
   authors: (
@@ -39,7 +44,9 @@
 
 Traffic crashes are an important transportation safety concern because their consequences range from property damage to serious injuries and fatalities. Understanding which crash conditions are associated with more severe injuries can help identify useful patterns for transportation safety analysis. This study investigates the relationship between reported crash characteristics and maximum injury severity, and examines how well severity can be classified using a limited set of variables.
 
-The analysis has two parts. First, exploratory data analysis is used to describe crash patterns and compare injury outcomes across environmental conditions, time, location, and crash characteristics. Second, logistic regression, manually defined decision rules, and neural networks are evaluated for injury severity classification. Different prediction targets are included to examine related questions: whether any injury occurred, whether an injury was serious or fatal, whether a fatality occurred, and which of five severity categories applied. These targets reflect different levels of detail and different safety priorities. The results are interpreted separately because the models were not evaluated using identical targets and test sets.
+Previous studies have applied data science and machine learning methods to predict and assess traffic crash injury severity. Zhu et al. (2021) compared multilayer perceptron (MLP), XGBoost, and support vector machine (SVM) models for injury severity classification. Their study addressed class imbalance through oversampling and classification threshold adjustments to improve predictions across severity categories. Gu et al. (2023) investigated injury risk using NHTSA CRSS and FARS datasets and compared several machine learning models to assess injury severity based on crash characteristics and pre-crash indicators. More recently, Chen et al. (2026) reviewed 306 studies on machine learning applications for crash injury severity prediction and highlighted challenges related to class imbalance, model evaluation, and interpretability. These studies demonstrate the potential of data-driven approaches for analyzing crash severity, while emphasizing the difficulty of identifying less frequent severe and fatal outcomes.
+
+The analysis in this report has two parts. First, exploratory data analysis is used to describe crash patterns and compare injury outcomes across environmental conditions, time, location, and crash characteristics. Second, several machine learning techniques, including logistic regression, decision trees, and neural networks are evaluated for injury severity classification. Different prediction targets are included to examine related questions: whether any injury occurred, whether an injury was serious or fatal, whether a fatality occurred, and which of five severity categories applied. These targets reflect different levels of detail and different safety priorities. The results are interpreted separately because the models were not evaluated using identical targets and test sets.
 
 The study is based on the National Highway Traffic Safety Administration (NHTSA) Crash Report Sampling System (CRSS). CRSS uses probability sampling to support national estimates of police-reported crashes. Previous studies have examined the association of crash injury severity with lighting, roadway conditions, alcohol involvement, and other crash characteristics. For example, #link("https://doi.org/10.1016/j.jsr.2015.12.003")[a study of rural two-lane roads] evaluated severity under different lighting conditions, while #link("https://doi.org/10.1080/15389588.2011.557110")[a study of major urban roadways] examined traditional and additional injury-severity predictors. These studies support examining environmental and crash-related variables, but their results do not establish causal effects in the present dataset.
 
