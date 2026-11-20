@@ -42,6 +42,8 @@
 
 = Introduction
 
+== Background and Motivation
+
 Traffic crashes are an important transportation safety concern because their consequences range from property damage to serious injuries and fatalities. Understanding which crash conditions are associated with more severe injuries can help identify useful patterns for transportation safety analysis. This study investigates the relationship between reported crash characteristics and maximum injury severity, and examines how well severity can be classified using a limited set of variables.
 
 Previous studies have applied data science and machine learning methods to predict and assess traffic crash injury severity. Zhu et al. (2021) compared multilayer perceptron (MLP), XGBoost, and support vector machine (SVM) models for injury severity classification. Their study addressed class imbalance through oversampling and classification threshold adjustments to improve predictions across severity categories. Gu et al. (2023) investigated injury risk using NHTSA CRSS and FARS datasets and compared several machine learning models to assess injury severity based on crash characteristics and pre-crash indicators. More recently, Chen et al. (2026) reviewed 306 studies on machine learning applications for crash injury severity prediction and highlighted challenges related to class imbalance, model evaluation, and interpretability. These studies demonstrate the potential of data-driven approaches for analyzing crash severity, while emphasizing the difficulty of identifying less frequent severe and fatal outcomes.
@@ -340,21 +342,21 @@ The following table summarizes the main attributes of the dataset. Additional cr
 Distributions of 15 initially considered parameters were examined for the 54,745 sampled crashes in 2020. The overview figures describe the sample before the selected variables are examined in relation to injury severity. The percentages shown in these overview figures are unweighted.
 
 #figure(
-  image("figures/figure1_outcomes_participants.png", width: 100%),
+  image("figures/figure1_outcomes_participants.png", width: 130%),
   caption: [Injury outcomes and people involved in the 2020 crash sample. The five panels show maximum injury severity, number of injuries, number of vehicles, number of pedestrians, and youngest driver age. Percentages and counts are unweighted.],
 ) <fig-overview-outcomes>
 
 The first overview figure shows that 44.2% of sampled crashes had no apparent injury and 61.0% involved two vehicles. Most crashes had no pedestrian involved. Youngest driver age is calculated from driver records for each crash; crashes without a known driver age are omitted from that histogram.
 
 #figure(
-  image("figures/figure2_conditions_geography.png", width: 100%),
+  image("figures/figure2_conditions_geography.png", width: 130%),
   caption: [Weather, lighting, crash hour, urban or rural classification, and geographic region in the 2020 crash sample. Percentages and counts are unweighted.],
 ) <fig-overview-conditions>
 
 The second overview figure shows that clear weather and daylight were the most common recorded conditions. Sample crash counts were highest around 5 PM. These counts describe when and where sampled crashes occurred; they do not measure crash risk per mile traveled.
 
 #figure(
-  image("figures/figure3_behavior_context.png", width: 100%),
+  image("figures/figure3_behavior_context.png", width: 130%),
   caption: [Alcohol involvement, work-zone involvement, collision type, speeding involvement, and within-crash seat-belt use in the 2020 crash sample. Percentages and counts are unweighted.],
 ) <fig-overview-context>
 
@@ -377,7 +379,7 @@ Approximately 3.64% of weighted crashes involved serious or fatal injuries. The 
 === Temporal Distribution of Crashes
 
 #figure(
-  image("figures/timing_heatmap.png", width: 100%),
+  image("figures/timing_heatmap.png", width: 115%),
   caption: [Hourly distribution of crashes across different days of the week in 2020. Values are survey-weighted and normalized within each day.],
 )
 
@@ -421,7 +423,7 @@ Alcohol involvement and the number of vehicles were examined as additional crash
 The figure compares the distribution of injury severity within crashes recorded with and without alcohol involvement. The percentages are conditional on each alcohol category and therefore allow the outcome distributions to be compared.
 
 #figure(
-  image("figures/alc_vs_severity_rev.png", width: 100%),
+  image("figures/alc_vs_severity_rev.png", width: 115%),
   caption: [Injury severity distribution by alcohol involvement in 2020.],
 )
 
@@ -432,7 +434,7 @@ Among crashes without reported alcohol involvement, 45.48% were classified as ha
 The heatmap summarizes crash counts across vehicle-count and severity categories. One- and two-vehicle crashes account for the largest shares of the sample, particularly among crashes with no apparent or possible injury.
 
 #figure(
-  image("figures/total_vehicle_vs_severity_rev.png", width: 100%),
+  image("figures/total_vehicle_vs_severity_rev.png", width: 115%),
   caption: [Injury severity distribution by total vehicles involved in 2020.],
 )
 
@@ -443,7 +445,7 @@ Serious and fatal injury categories are also concentrated among crashes involvin
 The distribution of the number of injured persons was examined within each recorded severity category. This comparison describes the relationship between two crash outcomes and was not used to select a prediction input.
 
 #figure(
-  image("figures/numinj_vs_severity_rev.png", width: 100%),
+  image("figures/numinj_vs_severity_rev.png", width: 110%),
   caption: [Injury severity distribution by number of injuries in 2020.],
 )
 
@@ -476,7 +478,7 @@ Of the 54,544 eligible crashes, 34,908 (64%) were assigned to training, 8,727 (1
 The model was implemented in Julia as a single linear layer with a sigmoid function and trained for 3,000 steps using Zygote. The logistic regression output represents the model's estimated probability of the positive severity category. A learning rate of 0.20 led to faster convergence than 0.05, with training loss approaching 0.402. Standardizing the numerical inputs produced nearly unchanged validation performance (receiver operating characteristic area under the curve, ROC-AUC, 0.6533; precision-recall area under the curve, PR-AUC, 0.2629).
 
 #figure(
-  image("figures/fig1_logistic_convergence.png", width: 85%),
+  image("figures/fig1_logistic_convergence.png", width: 100%),
   caption: [Logistic Regression Training Convergence. A learning rate of 0.20 learns faster than 0.05 and settles at a steady training error of ~0.402.]
 ) <fig-lr-convergence>
 
@@ -489,14 +491,14 @@ Regularization was also examined. An L2 penalty of 0.01 reduced validation ROC-A
 The test ROC-AUC was 0.6186, and the test PR-AUC was 0.2241. The latter exceeded the positive-class prevalence of 0.1363 in the test set. However, with the default threshold of 0.50, every test crash was classified as non-severe. This produced 86.37% accuracy but zero recall for serious or fatal crashes. Accuracy alone was therefore not an adequate measure of performance.
 
 #figure(
-  image("figures/fig2_cv_and_pr.png", width: 95%),
+  image("figures/fig2_cv_and_pr.png", width: 100%),
   caption: [Cross-Validation ROC Curves (Left) and Final Test Precision-Recall Curve (Right). All five training folds cluster tightly around the average (0.628 ± 0.010), and test PR-AUC (0.224) beats the 0.136 majority baseline.]
 ) <fig-lr-cv-pr>
 
 The classification threshold was adjusted using the validation set. A threshold of 0.125 produced the highest validation F1 score, where F1 combines precision and recall. On the test set, this threshold gave 57.71% accuracy, 18.99% precision, 64.36% recall, and F1 = 0.2932. This means 957 of the 1,487 serious or fatal crashes were identified, with 4,083 non-severe crashes incorrectly classified as severe. A class-weighted alternative at threshold 0.50 achieved 68.45% accuracy and 43.58% recall. The threshold choice therefore involved a trade-off between detecting severe crashes and limiting false alarms.
 
 #figure(
-  image("figures/fig3_logistic_thresholds-1.png", width: 85%),
+  image("figures/fig3_logistic_thresholds-1.png", width: 90%),
   caption: [Score Trade-Offs Across Cutoffs. Lowering the cutoff from 0.500 to the validation-best 0.125 trades overall accuracy for higher severe-crash recall and the best F1 score.]
 ) <fig-lr-thresholds>
 
@@ -520,12 +522,12 @@ The classification threshold was adjusted using the validation set. A threshold 
 The fitted coefficients were positive for alcohol involvement (+1.06), unlighted darkness (+0.61), and lighted darkness (+0.38), and negative for vehicle count (-1.10), under the selected feature coding. These coefficients indicate associations in the fitted model, not causal effects. Removing vehicle count, alcohol, or lighting reduced validation ROC-AUC by 0.0262, 0.0226, and 0.0187, respectively. Interaction terms produced only a small increase in validation PR-AUC (0.2623 to 0.2644).
 
 #figure(
-  image("figures/fig4_logistic_weights_labeled.png", width: 90%),
+  image("figures/fig4_logistic_weights_labeled.png", width: 110%),
   caption: [Learned Logistic Regression Weights. Red bars raise severe injury risk (led by alcohol involvement and dark roads); blue bars lower risk (led by multi-car crashes and snow/rain).]
 ) <fig-lr-weights>
 
 #figure(
-  image("figures/fig6_feature_ablation.png", width: 85%),
+  image("figures/fig6_feature_ablation.png", width: 115%),
   caption: [Feature Ablation Impact on Validation ROC-AUC. Removing vehicle count, alcohol, or lighting causes the biggest drops in validation score, while removing time of day gives a tiny gain (+0.0009).]
 ) <fig-lr-ablation>
 
@@ -653,7 +655,7 @@ Many crashes were assigned to incorrect severity categories, including less seve
 === Training Progress
 
 #figure(
-  image("figures/05_training_progress_both.png", width: 100%),
+  image("figures/05_training_progress_both.png", width: 115%),
   caption: [Training and validation loss of the binary and five-class neural networks. The dashed lines indicate the selected training epochs.],
 )
 
@@ -674,7 +676,7 @@ Model 3 used four input variables: weather conditions, lighting conditions, hour
 The training and validation losses decreased toward approximately 0.38. Although the reported training and validation accuracies were near 74.63%, fatal recall was 45.54% at the threshold used for those curves. This illustrates how overall accuracy can be dominated by the nonfatal class. The final test confusion matrix reports different class predictions.
 
 #figure(
-  image("figures/Model3_Binary_Training_rev2.png", width: 90%),
+  image("figures/Model3_Binary_Training_rev2.png", width: 75%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using environmental, temporal, and location factors as input features.],
 )
 
@@ -692,7 +694,7 @@ Model 4 used two input variables, alcohol involvement and the total number of ve
 The training and validation losses decreased toward approximately 0.38. The reported training and validation accuracies were near 65.18%, but fatal recall remained at 64.6% in the corresponding training curves. In contrast, the final test confusion matrix reports detection of fatal crashes.
 
 #figure(
-  image("figures/Model4_Binary_Training_rev2.png", width: 90%),
+  image("figures/Model4_Binary_Training_rev2.png", width: 75%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using crash characteristics as input features.],
 )
 
