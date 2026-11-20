@@ -13,11 +13,11 @@ $ hat(y) = sigma(bold(w) bold(x) + b) = cases(
   frac(e^(bold(w) bold(x) + b), 1 + e^(bold(w) bold(x) + b)) & "if " bold(w) bold(x) + b < 0
 ) $
 
-Because our continuous features (`HOUR_IM` and `log1p(VE_TOTAL)`) were already normalized to the $[0, 1]$ range alongside our binary indicator features, gradient descent converged smoothly without additional z-score standardization. To verify this, we also tested z-score standardization (scaling each feature to a mean of 0 and standard deviation of 1), which produced nearly identical validation scores: a Receiver Operating Characteristic Area Under the Curve (ROC-AUC) of 0.6533—which measures how reliably the model ranks severe crashes higher than minor ones across all probability thresholds—and a Precision-Recall Area Under the Curve (PR-AUC) of 0.2629, which measures the trade-off between identifying true severe crashes and avoiding false positives in an imbalanced dataset. As shown in @fig-lr-convergence, a learning rate of 0.20 converged faster than 0.05 without oscillating, stabilizing at a training binary cross-entropy loss of approximately 0.402.
+Because our continuous features (`HOUR_IM` and `log1p(VE_TOTAL)`) were already normalized to the range [0, 1] alongside our binary indicator features, gradient descent converged smoothly without additional z-score standardization. To verify this, we also tested z-score standardization (scaling each feature to a mean of 0 and standard deviation of 1), which produced nearly identical validation scores: a Receiver Operating Characteristic Area Under the Curve (ROC-AUC) of 0.6533—which measures how reliably the model ranks severe crashes higher than minor ones across all probability thresholds—and a Precision-Recall Area Under the Curve (PR-AUC) of 0.2629, which measures the trade-off between identifying true severe crashes and avoiding false positives in an imbalanced dataset. As shown in @fig-lr-convergence, a learning rate of 0.20 converged faster than 0.05 without oscillating, stabilizing at a training binary cross-entropy loss of approximately 0.402.
 
 #figure(
   image("assets/fig1_logistic_convergence-1.png", width: 85%),
-  caption: [Logistic Regression Training Convergence. A learning rate of 0.20 learns faster than 0.05 and settles at a steady training error of ~0.402.]
+  caption: [Logistic Regression Training Convergence. A learning rate of 0.20 converges faster than 0.05 and stabilizes at a training binary cross-entropy loss of approximately 0.402.]
 ) <fig-lr-convergence>
 
 === 3. Cross-Validation and Regularization Tests
@@ -30,18 +30,17 @@ When evaluated on the 10,909 unseen test crashes, the final model yielded a ROC-
 
 #figure(
   image("assets/fig2_cv_and_pr.png", width: 95%),
-  caption: [Cross-Validation ROC Curves (Left) and Final Test Precision-Recall Curve (Right). All five training folds cluster tightly around the average (0.628 ± 0.010), and test PR-AUC (0.224) beats the 0.136 majority baseline.]
+  caption: [Cross-Validation ROC Curves (Left) and Final Test Precision-Recall Curve (Right). All five training folds cluster tightly around the average (0.628 ± 0.010), and test PR-AUC (0.224) exceeds the 0.136 random-guessing baseline.]
 ) <fig-lr-cv-pr>
 
 #figure(
   image("assets/fig3_logistic_thresholds-1.png", width: 85%),
-  caption: [Score Trade-Offs Across Cutoffs. Lowering the cutoff from 0.500 to the validation-best 0.125 trades overall accuracy for higher severe-crash recall and the best F1 score.]
+  caption: [Score Trade-Offs Across Cutoffs. Lowering the cutoff from 0.500 to the validation-best 0.125 trades overall accuracy for higher severe-crash recall and the highest F1 score.]
 ) <fig-lr-thresholds>
 
 To address this class imbalance, we tested two practical strategies on the unseen test set (@tbl-lr-results): lowering the probability threshold required to flag a severe crash (cutoff tuning) versus penalizing the model more heavily for missing severe crashes during training (class-weighted training). First, lowering the decision cutoff from 0.500 to $t = 0.125$—the threshold that maximized the F1 score (the harmonic mean of precision and recall) on the validation set—allows the standard model to flag high-risk crashes. On the test set, this $t = 0.125$ cutoff achieves 57.71% overall accuracy, identifies 64.36% of all serious or fatal crashes (957 out of 1,487), and yields our highest F1 score of 0.2932 (with 18.99% precision). Second, we retrained the model with class weights that penalized missed severe crashes 5.9 times more heavily than minor ones, enabling the use of the default $t = 0.500$ cutoff; this approach results in 68.45% overall accuracy and identifies 43.58% of severe crashes (F1 = 0.2735). For safety screening applications, we recommend standard training with cutoff tuning ($t = 0.125$) because it identifies over 20 percentage points more life-threatening crashes while preserving calibrated risk probabilities that reflect the true baseline rate in the data.
 
 #figure(
-
   table(
     columns: 7,
     align: (left, center, center, center, center, center, center),
@@ -53,7 +52,7 @@ To address this class imbalance, we tested two practical strategies on the unsee
     [*Standard LR (Val-Best)*], [*0.125*], [*57.71%*], [*18.99%*], [*64.36%*], [*0.2932*], [*957 / 4,083 / 5,339 / 530*],
     [Class-Weighted LR (5.9× Weight)], [0.500], [68.45%], [19.93%], [43.58%], [0.2735], [648 / 2,603 / 6,819 / 839],
   ),
-  caption: [Final Test Set Scores Across Cutoffs and Imbalance Methods ($N = 10,909$).]
+  caption: [Final Test Set Scores Across Cutoffs and Imbalance Methods for Logistic Regression (LR) ($N = 10,909$; TP = True Positives, FP = False Positives, TN = True Negatives, FN = False Negatives).]
 ) <tbl-lr-results>
 
 === 5. Which Factors Matter Most
@@ -62,15 +61,14 @@ The model's learned weights show how strongly each factor increases or decreases
 
 #figure(
   image("assets/fig4_logistic_weights_labeled.png", width: 90%),
-  caption: [Learned Logistic Regression Weights. Red bars raise severe injury risk (led by alcohol involvement and dark roads); blue bars lower risk (led by multi-car crashes and snow/rain).]
+  caption: [Learned Logistic Regression Weights. Red bars indicate features that increase predicted severe injury risk (led by alcohol involvement and dark roadways), whereas blue bars indicate features that decrease predicted risk (led by higher vehicle counts and snow or rain).]
 ) <fig-lr-weights>
 
 #figure(
   image("assets/fig6_feature_ablation.png", width: 85%),
-  caption: [Feature Ablation Impact on Validation ROC-AUC. Removing vehicle count, alcohol, or lighting causes the biggest drops in validation score, while removing time of day gives a tiny gain (+0.0009).]
+  caption: [Feature Ablation Impact on Validation ROC-AUC. Removing vehicle count, alcohol involvement, or lighting conditions causes the largest decreases in validation ROC-AUC, whereas removing time of day yields a slight increase (+0.0009).]
 ) <fig-lr-ablation>
 
 === 6. Strengths, Limits, and Future Improvements
 
-The primary strengths of this logistic regression model are its interpretability, consistent performance across 5-fold cross-validation (ROC-AUC = 0.6276 ± 0.0095), and ability to reliably rank high-risk crashes above low-risk ones. Its main limitations are that a linear model cannot automatically capture complex multi-way feature interactions without manual feature engineering, and training without survey weights calibrates predicted risk probabilities to our sample's severe crash rate (14.45%) rather than the true national rate (3.64%). Future improvements include removing low-value features such as `HOUR_IM`, applying L1 (Lasso) regularization ($lambda = 0.001$) to produce a more parsimonious seven-feature model, incorporating Crash Report Sampling System (CRSS) survey weights during training to align predicted probabilities with national crash rates, and adding roadway speed-limit data.
-
+The primary strengths of this logistic regression model are its interpretability, consistent performance across 5-fold cross-validation (ROC-AUC = 0.6276 ± 0.0095), and ability to reliably rank high-risk crashes above low-risk ones. Its main limitations are that a linear model cannot automatically capture complex multi-way feature interactions without manual feature engineering, and training without survey weights calibrates predicted risk probabilities to our sample's severe crash rate (14.45%) rather than the true national rate (3.64%). Future improvements include removing low-value features such as `HOUR_IM`, applying L1 (Lasso) regularization ($lambda = 0.001$) to produce a more parsimonious seven-feature model, incorporating CRSS survey weights during training to align predicted probabilities with national crash rates, and adding roadway speed-limit data.
