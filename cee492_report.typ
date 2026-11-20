@@ -664,7 +664,7 @@ Two additional neural network models are considered to investigate the predictiv
 
 Model 3 used four input variables: weather conditions, lighting conditions, hour, and urban/rural conditions, to classify crash severity into two categories: fatal and other. The input features were encoded into numerical representations, and a weighted cross-entropy loss function was implemented to address class imbalance by assigning greater importance to the minority class. The neural network architecture consisted of two hidden layers with 64 and 32 neurons, respectively, using the Rectified Linear Unit (ReLU) activation function. The model was trained using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 epochs. Finally, the model's performance was evaluated using accuracy curves and confusion matrices to assess its classification performance for both severity categories.
 
-The training and validation losses decreased toward approximately 0.38. Although the reported training and validation accuracies were near 75.4%, fatal recall was 45.2% at the threshold used for those curves. This illustrates how overall accuracy can be dominated by the nonfatal class. The final test confusion matrix reports different class predictions.
+The training and validation losses decreased toward approximately 0.38. Although the reported training and validation accuracies were near 74.63%, fatal recall was 45.54% at the threshold used for those curves. This illustrates how overall accuracy can be dominated by the nonfatal class. The final test confusion matrix reports different class predictions.
 
 #figure(
   image("figures/Model3_Binary_Training_rev2.png", width: 90%),
@@ -682,7 +682,7 @@ The confusion matrices (Figure 22) show the final test predictions for fatal and
 
 Model 4 used two input variables, alcohol involvement and the total number of vehicles involved in a crash, to predict crash severity as either fatal or other. The input features were encoded into numerical representations, and a weighted cross-entropy loss function was implemented to address class imbalance by assigning greater importance to the minority class. The model was developed using a neural network with two hidden layers containing 64 and 32 neurons, respectively, both incorporating the Rectified Linear Unit (ReLU) activation function. Training was performed using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 training epochs. The model's classification performance was subsequently assessed through accuracy curves and confusion matrices to evaluate its ability to distinguish between the two severity categories.
 
-The training and validation losses decreased toward approximately 0.38. The reported training and validation accuracies were near 65.4%, but fatal recall remained at 0% in the corresponding training curves. In contrast, the final test confusion matrix reports detection of fatal crashes.
+The training and validation losses decreased toward approximately 0.38. The reported training and validation accuracies were near 65.18%, but fatal recall remained at 64.6% in the corresponding training curves. In contrast, the final test confusion matrix reports detection of fatal crashes.
 
 #figure(
   image("figures/Model4_Binary_Training_rev2.png", width: 90%),
