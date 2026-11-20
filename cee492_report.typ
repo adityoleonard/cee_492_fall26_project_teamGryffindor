@@ -664,17 +664,17 @@ Two additional neural network models are considered to investigate the predictiv
 
 Model 3 used four input variables: weather conditions, lighting conditions, hour, and urban/rural conditions, to classify crash severity into two categories: fatal and other. The input features were encoded into numerical representations, and a weighted cross-entropy loss function was implemented to address class imbalance by assigning greater importance to the minority class. The neural network architecture consisted of two hidden layers with 64 and 32 neurons, respectively, using the Rectified Linear Unit (ReLU) activation function. The model was trained using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 epochs. Finally, the model's performance was evaluated using accuracy curves and confusion matrices to assess its classification performance for both severity categories.
 
-The training and validation losses decreased toward approximately 0.38. Although the reported training and validation accuracies were near 97.43%, fatal recall was 0% at the threshold used for those curves. This illustrates how overall accuracy can be dominated by the nonfatal class. The final test confusion matrix reports different class predictions.
+The training and validation losses decreased toward approximately 0.38. Although the reported training and validation accuracies were near 75.4%, fatal recall was 45.2% at the threshold used for those curves. This illustrates how overall accuracy can be dominated by the nonfatal class. The final test confusion matrix reports different class predictions.
 
 #figure(
-  image("figures/Model3_Binary_Training_rev.png", width: 90%),
+  image("figures/Model3_Binary_Training_rev2.png", width: 90%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using environmental, temporal, and location factors as input features.],
 )
 
-The confusion matrices show the final test predictions for fatal and nonfatal crashes. A confusion matrix compares the actual and predicted classes, where correctly classified observations are typically represented by the diagonal elements. The row and column class orders differ in this figure, so correct classifications appear in the upper-right and lower-left cells rather than on the usual diagonal. The count matrix shows the original confusion matrix, indicating that the test dataset is highly imbalanced, with 10,604 observations (97.43%) belonging to the Other class and only 280 observations (2.57%) belonging to the Fatal class. Among these observations, the model correctly classified 7,461 non-fatal crashes and 137 fatal crashes, while 3,143 non-fatal crashes were incorrectly classified as fatal and 143 fatal crashes were incorrectly classified as non-fatal. The normalized matrix presents the normalized confusion matrix, which illustrates the proportion of correctly and incorrectly classified observations within each class. The results show that the neural network correctly classified 70.4% of non-fatal crashes and 48.9% of fatal crashes. Overall, the neural network achieved an overall classification accuracy of 69.8%, correctly predicting 7,598 out of 10,884 observations. However, the balanced accuracy was 59.6%, representing the average classification accuracy across the Fatal and Other classes. These findings indicate that the model performed better in identifying non-fatal crashes than fatal crashes.
+The confusion matrices (Figure 22) show the final test predictions for fatal and nonfatal crashes. A confusion matrix compares the actual and predicted classes, where correctly classified observations are typically represented by the diagonal elements. The row and column class orders differ in this figure, so correct classifications appear in the upper-right and lower-left cells rather than on the usual diagonal. The count matrix shows the original confusion matrix, indicating that the test dataset is highly imbalanced, with 10,604 observations (97.43%) belonging to the Other class and only 280 observations (2.57%) belonging to the Fatal class. Among these observations, the model correctly classified 7,461 non-fatal crashes and 137 fatal crashes, while 3,143 non-fatal crashes were incorrectly classified as fatal and 143 fatal crashes were incorrectly classified as non-fatal. The normalized matrix presents the normalized confusion matrix, which illustrates the proportion of correctly and incorrectly classified observations within each class. The results show that the neural network correctly classified 70.4% of non-fatal crashes and 48.9% of fatal crashes. Overall, the neural network achieved an overall classification accuracy of 69.8%, correctly predicting 7,598 out of 10,884 observations. However, the balanced accuracy was 59.6%, representing the average classification accuracy across the Fatal and Other classes. These findings indicate that the model performed better in identifying non-fatal crashes than fatal crashes.
 
 #figure(
-  image("figures/Group1_Combined_Confusion_Matrices.png", width: 100%),
+  image("figures/Group1_Combined_Confusion_Matrices.png", width: 113%),
   caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 3.],
 )
 
@@ -682,23 +682,23 @@ The confusion matrices show the final test predictions for fatal and nonfatal cr
 
 Model 4 used two input variables, alcohol involvement and the total number of vehicles involved in a crash, to predict crash severity as either fatal or other. The input features were encoded into numerical representations, and a weighted cross-entropy loss function was implemented to address class imbalance by assigning greater importance to the minority class. The model was developed using a neural network with two hidden layers containing 64 and 32 neurons, respectively, both incorporating the Rectified Linear Unit (ReLU) activation function. Training was performed using Stochastic Gradient Descent (SGD) with a learning rate of 0.0003, a batch size of 32, and 100 training epochs. The model's classification performance was subsequently assessed through accuracy curves and confusion matrices to evaluate its ability to distinguish between the two severity categories.
 
-The training and validation losses decreased toward approximately 0.38. The reported training and validation accuracies were near 97.44%, but fatal recall remained at 0% in the corresponding training curves. In contrast, the final test confusion matrix reports detection of fatal crashes.
+The training and validation losses decreased toward approximately 0.38. The reported training and validation accuracies were near 65.4%, but fatal recall remained at 0% in the corresponding training curves. In contrast, the final test confusion matrix reports detection of fatal crashes.
 
 #figure(
-  image("figures/Model4_Binary_Training_rev.png", width: 90%),
+  image("figures/Model4_Binary_Training_rev2.png", width: 90%),
   caption: [(a) Training and validation loss curves, (b) training and validation accuracy curves, and (c) balanced accuracy and fatal-class recall of the neural network using crash characteristics as input features.],
 )
 
-The test confusion matrix for Model 4 contains the test dataset consists of 10,952 observations, including 10,667 non-fatal crashes (97.40%) and only 285 fatal crashes (2.60%). Among these observations, the model correctly identified 6,900 non-fatal crashes and 196 fatal crashes, while 3,767 non-fatal crashes were incorrectly predicted as fatal and 89 fatal crashes were incorrectly classified as non-fatal. The normalized matrix shows that the model correctly classified 64.7% of non-fatal crashes and 68.8% of fatal crashes. Overall, Model 4 achieved an overall classification accuracy of 64.8%, correctly predicting 7,096 out of 10,952 observations, while the balanced accuracy was 66.7%, reflecting the average classification accuracy across the Fatal and Other classes. Fatal recall was 68.8% for Model 4 and 48.9% for Model 3, while nonfatal recall was 64.7% and 70.4%, respectively. Because the models used different test sets, this difference is descriptive and does not establish the effect of using two rather than four inputs.
+The test confusion matrix for Model 4 contains the test dataset consists of 10,952 observations, including 10,667 non-fatal crashes (97.40%) and only 285 fatal crashes (2.60%). Among these observations, the model correctly identified 7,008 non-fatal crashes and 193 fatal crashes, while 3,659 non-fatal crashes were incorrectly predicted as fatal and 92 fatal crashes were incorrectly classified as non-fatal. The normalized matrix shows that the model correctly classified 65.7% of non-fatal crashes and 67.7% of fatal crashes. Overall, Model 4 achieved an overall classification accuracy of 65.76%, correctly predicting 7,202 out of 10,952 observations, while the balanced accuracy was 66.7%, reflecting the average classification accuracy across the Fatal and Other classes. Fatal recall was 65.7% for Model 4 and 48.9% for Model 3, while nonfatal recall was 64.7% and 70.4%, respectively. Because the models used different test sets, this difference is descriptive and does not establish the effect of using two rather than four inputs.
 
 #figure(
-  image("figures/Group2_Combined_Confusion_Matrices.png", width: 100%),
+  image("figures/Model4_Confusion_Matrix_rev.png", width: 113%),
   caption: [(a) Confusion matrix, (b) Normalized confusion matrix of model 4.],
 )
 
 === Comparison of the Four Neural Network Models
 
-The comparison table reports results for all four neural networks. The binary networks show different trade-offs between fatal-crash detection and false alarms. Model 4 reported 68.8% fatal recall, compared with 48.9% for Model 3 and 25.9% for Model 1. However, these models were evaluated on different test sets, so the differences cannot be attributed only to the selected input variables. Model 2 used a five-class target and should be interpreted separately.
+The comparison table reports results for all four neural networks. The binary networks show different trade-offs between fatal-crash detection and false alarms. Model 4 reported 67.7% fatal recall, compared with 48.9% for Model 3 and 25.9% for Model 1. However, these models were evaluated on different test sets, so the differences cannot be attributed only to the selected input variables. Model 2 used a five-class target and should be interpreted separately.
 
 #figure(
   caption: [Comparison of the four neural network models],
@@ -719,13 +719,13 @@ The comparison table reports results for all four neural networks. The binary ne
     [Number of Classes], [2], [5], [2], [2],
 
     [*Overall Accuracy*],
-    [*91.6%*], [44.5%], [69.8%], [64.8%],
+    [*91.6%*], [44.5%], [69.8%], [65.76%],
 
     [*Balanced Accuracy*],
     [59.6%], [27.0%], [59.6%], [*66.7%*],
 
     [Other (Non-fatal)],
-    [93.3%], [—], [70.4%], [64.7%],
+    [93.3%], [—], [70.4%], [65.7%],
 
     [No Injury],
     [—], [80.8%], [—], [—],
@@ -740,7 +740,7 @@ The comparison table reports results for all four neural networks. The binary ne
     [—], [16.8%], [—], [—],
 
     [*Fatal*],
-    [25.9%], [3.3%], [48.9%], [*68.8%*],
+    [25.9%], [3.3%], [48.9%], [*67.7%*],
   )
 )
 
